@@ -1,344 +1,767 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NZ 常见病记忆卡 / NZ Disease Flashcards</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     :root {
-      --bg: #f4f0e6; --surface: #fffdf8; --border: #ddd5c4;
-      --ink: #1a1510; --ink-muted: #6b5e4e;
-      --accent: #c0392b; --accent-soft: #faeae8;
-      --green: #276648; --green-soft: #e6f2ec;
-      --blue: #1a4f6e; --blue-soft: #e6eef5;
-      --gold: #9a6f08; --gold-soft: #fdf3d9;
+      --bg: #f4f0e6;
+      --surface: #fffdf8;
+      --border: #ddd5c4;
+      --ink: #1a1510;
+      --ink-muted: #6b5e4e;
+      --accent: #c0392b;
+      --accent-soft: #faeae8;
+      --green: #276648;
+      --green-soft: #e6f2ec;
+      --blue: #1a4f6e;
+      --blue-soft: #e6eef5;
+      --gold: #9a6f08;
+      --gold-soft: #fdf3d9;
       --purple: #5b3d82;
     }
-    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
 
     header {
-      background:var(--surface); border-bottom:1px solid var(--border);
-      padding:16px 28px; display:flex; align-items:center; gap:14px;
-      position:sticky; top:0; z-index:20; box-shadow:0 2px 10px rgba(0,0,0,0.06);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
-    .logo { width:36px;height:36px;background:var(--accent);border-radius:10px;
-      display:flex;align-items:center;justify-content:center;color:#fff;
-      font-family:'DM Serif Display',serif;font-size:1.1rem; }
-    header h1 { font-family:'DM Serif Display',serif;font-size:1.3rem; }
-    header .sub { font-family:'Noto Serif SC',serif;font-size:0.82rem;color:var(--ink-muted); }
-    .total-badge { margin-left:auto;font-size:0.78rem;color:var(--ink-muted);
-      background:var(--bg);border:1px solid var(--border);padding:4px 12px;border-radius:999px; }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+    }
+
+    header .sub {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    .total-badge {
+      margin-left: auto;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
 
     .toolbar {
-      background:var(--surface);border-bottom:1px solid var(--border);
-      padding:12px 28px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
     }
-    .filter-label { font-size:0.7rem;font-weight:500;text-transform:uppercase;
-      letter-spacing:0.09em;color:var(--ink-muted);white-space:nowrap; }
-    .filter-group { display:flex;align-items:center;gap:6px;flex-wrap:wrap; }
-    .pill { padding:5px 13px;border-radius:999px;border:1.5px solid var(--border);
-      background:transparent;font-size:0.78rem;font-family:'DM Sans',sans-serif;
-      cursor:pointer;transition:all 0.15s;color:var(--ink-muted);white-space:nowrap; }
-    .pill:hover { border-color:var(--accent);color:var(--accent); }
-    .pill.active { background:var(--accent);border-color:var(--accent);color:#fff; }
-    .pill.cat-active { background:var(--purple);border-color:var(--purple);color:#fff; }
-    .pill.age-child:hover:not(.active) { border-color:var(--green);color:var(--green); }
-    .pill.age-child.active { background:var(--green);border-color:var(--green);color:#fff; }
-    .pill.age-adult:hover:not(.active) { border-color:var(--blue);color:var(--blue); }
-    .pill.age-adult.active { background:var(--blue);border-color:var(--blue);color:#fff; }
-    .pill.age-elder:hover:not(.active) { border-color:var(--gold);color:var(--gold); }
-    .pill.age-elder.active { background:var(--gold);border-color:var(--gold);color:#fff; }
-    .divider-v { width:1px;height:22px;background:var(--border);flex-shrink:0; }
-    .search-box { padding:6px 14px;border:1.5px solid var(--border);border-radius:999px;
-      font-family:'DM Sans',sans-serif;font-size:0.82rem;background:var(--bg);
-      color:var(--ink);outline:none;transition:border-color 0.2s;min-width:160px; }
-    .search-box:focus { border-color:var(--accent); }
-    .search-box::placeholder { color:var(--ink-muted);opacity:0.55; }
-    .stats-text { margin-left:auto;font-size:0.78rem;color:var(--ink-muted);white-space:nowrap; }
 
-    main { padding:26px;max-width:1300px;margin:0 auto; }
-    .grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px; }
+    .filter-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .pill.cat-active {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: #fff;
+    }
+
+    .pill.age-child:hover:not(.active) {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .pill.age-child.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .pill.age-adult:hover:not(.active) {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .pill.age-adult.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .pill.age-elder:hover:not(.active) {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .pill.age-elder.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .search-box {
+      padding: 6px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      min-width: 160px;
+    }
+
+    .search-box:focus {
+      border-color: var(--accent);
+    }
+
+    .search-box::placeholder {
+      color: var(--ink-muted);
+      opacity: 0.55;
+    }
+
+    .stats-text {
+      margin-left: auto;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    main {
+      padding: 26px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
 
     .card {
-      background:var(--surface);border:1px solid var(--border);border-radius:14px;
-      padding:22px;cursor:pointer;transition:transform 0.18s,box-shadow 0.18s;
-      position:relative;overflow:hidden;min-height:230px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+      position: relative;
+      overflow: hidden;
+      min-height: 230px;
     }
-    .card::after { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
-    .card.resp::after   { background:linear-gradient(90deg,#e74c3c,#e67e22); }
-    .card.cardio::after { background:linear-gradient(90deg,#c0392b,#922b21); }
-    .card.endo::after   { background:linear-gradient(90deg,#2980b9,#1a5276); }
-    .card.neuro::after  { background:linear-gradient(90deg,#8e44ad,#5b2c6f); }
-    .card.msk::after    { background:linear-gradient(90deg,#27ae60,#1e8449); }
-    .card.gi::after     { background:linear-gradient(90deg,#d35400,#b7460d); }
-    .card.skin::after   { background:linear-gradient(90deg,#f39c12,#d68910); }
-    .card.mental::after { background:linear-gradient(90deg,#16a085,#0e6655); }
-    .card.infect::after { background:linear-gradient(90deg,#e74c3c,#78281f); }
-    .card.cancer::after { background:linear-gradient(90deg,#7f8c8d,#34495e); }
-    .card.repro::after  { background:linear-gradient(90deg,#e91e8c,#ad1457); }
-    .card.eye::after    { background:linear-gradient(90deg,#3498db,#1f618d); }
-    .card.ent::after    { background:linear-gradient(90deg,#1abc9c,#0e8074); }
-    .card.renal::after  { background:linear-gradient(90deg,#9b59b6,#6c3483); }
-    .card.blood::after  { background:linear-gradient(90deg,#c0392b,#e74c3c); }
-    .card:hover { transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.11); }
-    .card.flipped .card-front { display:none; }
-    .card:not(.flipped) .card-back { display:none; }
 
-    .cat-tag { display:inline-block;font-size:0.67rem;font-weight:500;text-transform:uppercase;
-      letter-spacing:0.08em;padding:2px 9px;border-radius:5px;margin-bottom:10px; }
-    .card-en { font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1.2;
-      color:var(--ink);margin-bottom:2px; }
-    .card-ipa { font-size:0.78rem;color:var(--ink-muted);font-style:italic;
-      letter-spacing:0.02em;margin-bottom:4px;font-family:'DM Sans',sans-serif; }
-    .card-zh { font-family:'Noto Serif SC',serif;font-size:0.95rem;
-      color:var(--ink-muted);margin-bottom:14px; }
-    .mnemonic-box { background:var(--accent-soft);border-left:3px solid var(--accent);
-      padding:9px 13px;border-radius:0 8px 8px 0;font-size:0.84rem;
-      color:var(--accent);margin-bottom:14px;line-height:1.5; }
-    .mnemonic-label { font-size:0.65rem;font-weight:500;text-transform:uppercase;
-      letter-spacing:0.08em;opacity:0.65;margin-bottom:2px; }
-    .age-tags { display:flex;gap:5px;flex-wrap:wrap; }
-    .age-tag { font-size:0.68rem;padding:3px 9px;border-radius:999px;font-weight:500; }
-    .tag-child { background:var(--green-soft);color:var(--green); }
-    .tag-adult { background:var(--blue-soft);color:var(--blue); }
-    .tag-elder { background:var(--gold-soft);color:var(--gold); }
-    .flip-hint { position:absolute;bottom:10px;right:14px;font-size:0.67rem;
-      color:var(--ink-muted);opacity:0.4; }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
 
-    .back-header { display:flex;align-items:baseline;gap:8px;margin-bottom:14px; }
-    .back-en { font-family:'DM Serif Display',serif;font-size:1.05rem; }
-    .back-zh { font-family:'Noto Serif SC',serif;font-size:0.82rem;color:var(--ink-muted); }
-    .detail-label { font-size:0.67rem;font-weight:500;text-transform:uppercase;
-      letter-spacing:0.08em;color:var(--ink-muted);margin-bottom:5px;margin-top:11px; }
-    .symptom-list { display:flex;flex-wrap:wrap;gap:5px; }
-    .symptom-chip { font-size:0.75rem;padding:3px 9px;background:var(--bg);
-      border:1px solid var(--border);border-radius:6px; }
-    .note-text { font-size:0.83rem;line-height:1.6; }
+    .card.resp::after {
+      background: linear-gradient(90deg, #e74c3c, #e67e22);
+    }
 
-    .cat-resp   { background:#fde8e6;color:#c0392b; }
-    .cat-cardio { background:#fde6e6;color:#922b21; }
-    .cat-endo   { background:#e8f0fa;color:#1a5276; }
-    .cat-neuro  { background:#f0e8fa;color:#5b2c6f; }
-    .cat-msk    { background:#e6f5ec;color:#1e8449; }
-    .cat-gi     { background:#fdeee6;color:#b7460d; }
-    .cat-skin   { background:#fdf5e0;color:#9a7d0a; }
-    .cat-mental { background:#e6f5f3;color:#0e6655; }
-    .cat-infect { background:#fde8e6;color:#78281f; }
-    .cat-cancer { background:#eaeced;color:#34495e; }
-    .cat-repro  { background:#fde6f1;color:#ad1457; }
-    .cat-eye    { background:#e6f0fa;color:#1f618d; }
-    .cat-ent    { background:#e6f5f2;color:#0e8074; }
-    .cat-renal  { background:#f0e8fa;color:#6c3483; }
-    .cat-blood  { background:#fde6e6;color:#922b21; }
+    .card.cardio::after {
+      background: linear-gradient(90deg, #c0392b, #922b21);
+    }
 
-    .empty { grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--ink-muted); }
-    .empty h3 { font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px; }
+    .card.endo::after {
+      background: linear-gradient(90deg, #2980b9, #1a5276);
+    }
 
-    @media(max-width:600px){
-      main{padding:14px;} .toolbar{padding:10px 14px;} header{padding:12px 14px;}
+    .card.neuro::after {
+      background: linear-gradient(90deg, #8e44ad, #5b2c6f);
+    }
+
+    .card.msk::after {
+      background: linear-gradient(90deg, #27ae60, #1e8449);
+    }
+
+    .card.gi::after {
+      background: linear-gradient(90deg, #d35400, #b7460d);
+    }
+
+    .card.skin::after {
+      background: linear-gradient(90deg, #f39c12, #d68910);
+    }
+
+    .card.mental::after {
+      background: linear-gradient(90deg, #16a085, #0e6655);
+    }
+
+    .card.infect::after {
+      background: linear-gradient(90deg, #e74c3c, #78281f);
+    }
+
+    .card.cancer::after {
+      background: linear-gradient(90deg, #7f8c8d, #34495e);
+    }
+
+    .card.repro::after {
+      background: linear-gradient(90deg, #e91e8c, #ad1457);
+    }
+
+    .card.eye::after {
+      background: linear-gradient(90deg, #3498db, #1f618d);
+    }
+
+    .card.ent::after {
+      background: linear-gradient(90deg, #1abc9c, #0e8074);
+    }
+
+    .card.renal::after {
+      background: linear-gradient(90deg, #9b59b6, #6c3483);
+    }
+
+    .card.blood::after {
+      background: linear-gradient(90deg, #c0392b, #e74c3c);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.11);
+    }
+
+    .card.flipped .card-front {
+      display: none;
+    }
+
+    .card:not(.flipped) .card-back {
+      display: none;
+    }
+
+    .cat-tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 9px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .card-en {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .card-ipa {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      font-style: italic;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .card-zh {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+    }
+
+    .mnemonic-box {
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      padding: 9px 13px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.84rem;
+      color: var(--accent);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .mnemonic-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.65;
+      margin-bottom: 2px;
+    }
+
+    .age-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .age-tag {
+      font-size: 0.68rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    .tag-child {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .tag-adult {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .tag-elder {
+      background: var(--gold-soft);
+      color: var(--gold);
+    }
+
+    .flip-hint {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 0.67rem;
+      color: var(--ink-muted);
+      opacity: 0.4;
+    }
+
+    .back-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .back-en {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.05rem;
+    }
+
+    .back-zh {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    .detail-label {
+      font-size: 0.67rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 5px;
+      margin-top: 11px;
+    }
+
+    .symptom-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .symptom-chip {
+      font-size: 0.75rem;
+      padding: 3px 9px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .note-text {
+      font-size: 0.83rem;
+      line-height: 1.6;
+    }
+
+    .cat-resp {
+      background: #fde8e6;
+      color: #c0392b;
+    }
+
+    .cat-cardio {
+      background: #fde6e6;
+      color: #922b21;
+    }
+
+    .cat-endo {
+      background: #e8f0fa;
+      color: #1a5276;
+    }
+
+    .cat-neuro {
+      background: #f0e8fa;
+      color: #5b2c6f;
+    }
+
+    .cat-msk {
+      background: #e6f5ec;
+      color: #1e8449;
+    }
+
+    .cat-gi {
+      background: #fdeee6;
+      color: #b7460d;
+    }
+
+    .cat-skin {
+      background: #fdf5e0;
+      color: #9a7d0a;
+    }
+
+    .cat-mental {
+      background: #e6f5f3;
+      color: #0e6655;
+    }
+
+    .cat-infect {
+      background: #fde8e6;
+      color: #78281f;
+    }
+
+    .cat-cancer {
+      background: #eaeced;
+      color: #34495e;
+    }
+
+    .cat-repro {
+      background: #fde6f1;
+      color: #ad1457;
+    }
+
+    .cat-eye {
+      background: #e6f0fa;
+      color: #1f618d;
+    }
+
+    .cat-ent {
+      background: #e6f5f2;
+      color: #0e8074;
+    }
+
+    .cat-renal {
+      background: #f0e8fa;
+      color: #6c3483;
+    }
+
+    .cat-blood {
+      background: #fde6e6;
+      color: #922b21;
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--ink-muted);
+    }
+
+    .empty h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    @media(max-width:600px) {
+      main {
+        padding: 14px;
+      }
+
+      .toolbar {
+        padding: 10px 14px;
+      }
+
+      header {
+        padding: 12px 14px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">Rx</div>
-  <div>
-    <h1>NZ Disease Flashcards</h1>
-    <div class="sub">新西兰常见病中英双语记忆卡</div>
+  <header>
+    <div class="logo">Rx</div>
+    <div>
+      <h1>NZ Disease Flashcards</h1>
+      <div class="sub">新西兰常见病中英双语记忆卡</div>
+    </div>
+    <span class="total-badge" id="totalBadge"></span>
+  </header>
+
+  <div class="toolbar">
+    <div class="filter-group">
+      <span class="filter-label">年龄</span>
+      <button class="pill active" data-age="all">全部</button>
+      <button class="pill age-child" data-age="child">儿童</button>
+      <button class="pill age-adult" data-age="adult">成人</button>
+      <button class="pill age-elder" data-age="elder">老年</button>
+    </div>
+    <div class="divider-v"></div>
+    <div class="filter-group" id="catFilters">
+      <span class="filter-label">系统</span>
+      <button class="pill active" data-cat="all">全部</button>
+    </div>
+    <div class="divider-v"></div>
+    <input class="search-box" type="text" placeholder="搜索 / Search…" id="searchInput" />
+    <span class="stats-text" id="stats"></span>
   </div>
-  <span class="total-badge" id="totalBadge"></span>
-</header>
 
-<div class="toolbar">
-  <div class="filter-group">
-    <span class="filter-label">年龄</span>
-    <button class="pill active" data-age="all">全部</button>
-    <button class="pill age-child" data-age="child">儿童</button>
-    <button class="pill age-adult" data-age="adult">成人</button>
-    <button class="pill age-elder" data-age="elder">老年</button>
-  </div>
-  <div class="divider-v"></div>
-  <div class="filter-group" id="catFilters">
-    <span class="filter-label">系统</span>
-    <button class="pill active" data-cat="all">全部</button>
-  </div>
-  <div class="divider-v"></div>
-  <input class="search-box" type="text" placeholder="搜索 / Search…" id="searchInput" />
-  <span class="stats-text" id="stats"></span>
-</div>
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
 
-<main><div class="grid" id="grid"></div></main>
+  <script>
+    const CATEGORIES = {
+      resp: { label: '呼吸系统' }, cardio: { label: '心血管' }, endo: { label: '内分泌/代谢' },
+      neuro: { label: '神经系统' }, msk: { label: '肌肉骨骼' }, gi: { label: '消化系统' },
+      skin: { label: '皮肤' }, mental: { label: '心理健康' }, infect: { label: '感染性疾病' },
+      cancer: { label: '肿瘤' }, repro: { label: '生殖/泌尿' }, eye: { label: '眼科' },
+      ent: { label: '耳鼻喉' }, renal: { label: '肾脏' }, blood: { label: '血液' },
+    };
 
-<script>
-const CATEGORIES = {
-  resp:  {label:'呼吸系统'}, cardio:{label:'心血管'}, endo:{label:'内分泌/代谢'},
-  neuro: {label:'神经系统'}, msk:  {label:'肌肉骨骼'}, gi:  {label:'消化系统'},
-  skin:  {label:'皮肤'},     mental:{label:'心理健康'}, infect:{label:'感染性疾病'},
-  cancer:{label:'肿瘤'},    repro:{label:'生殖/泌尿'}, eye:{label:'眼科'},
-  ent:   {label:'耳鼻喉'},  renal:{label:'肾脏'},      blood:{label:'血液'},
-};
+    const diseases = [
+      // RESPIRATORY
+      { en: 'Asthma', ipa: '/ˈæzmə/', zh: '哮喘', cat: 'resp', mnemonic: '「爱死马」— 喘不过气，像马在狂奔停不下来', ages: ['child', 'adult'], symptoms: ['喘鸣', '呼吸困难', '胸闷', '夜间咳嗽'], note: 'NZ患病率全球最高之一（儿童~15%，成人~12.4%）。触发因素：花粉、冷空气、运动、动物皮屑。吸入性皮质激素是一线治疗。' },
+      { en: 'COPD', ipa: '/ˌsiː.oʊ.piːˈdiː/', zh: '慢性阻塞性肺病', cat: 'resp', mnemonic: '「C-O-P-D，堵住肺」— Choke住，喘不上来，老烟民的代价', ages: ['adult', 'elder'], symptoms: ['慢性咳嗽', '痰多', '进行性呼吸困难', '桶状胸'], note: '主因吸烟（85%）。FEV1/FVC<0.7诊断。NZ每年因COPD住院约8,000次。肺康复训练是重要非药物干预。' },
+      { en: 'Pneumonia', ipa: '/njuːˈməʊniə/', zh: '肺炎', cat: 'resp', mnemonic: '「纽魔你啊」— 细菌魔鬼进肺里，发烧咳嗽你受吧', ages: ['child', 'elder'], symptoms: ['发热', '咳嗽', '胸痛', '呼吸急促', '痰多'], note: 'NZ老年人及毛利/太平洋社区高发。肺炎球菌疫苗65岁以上免费。阿莫西林是社区获得性肺炎一线用药。' },
+      { en: 'Bronchiolitis', ipa: '/ˌbrɒŋ.ki.əˈlaɪ.tɪs/', zh: '细支气管炎', cat: 'resp', mnemonic: '「搏肉皮他死」— 小宝宝肺里在搏斗，肉（呼气）皮（喘）他死样', ages: ['child'], symptoms: ['喘鸣', '咳嗽', '鼻塞流涕', '喂养困难', '低氧'], note: 'RSV是主因，多见<2岁婴儿。NZ冬季高发，是婴儿住院最常见原因之一。主要是支持治疗，补液+吸氧。' },
+      { en: 'Pulmonary Embolism', ipa: '/ˈpʌl.mə.nər.i ˈem.bə.lɪ.z(ə)m/', zh: '肺栓塞', cat: 'resp', mnemonic: '「破了魔你死」— 血栓堵了肺血管，魔鬼一样突发致命', ages: ['adult', 'elder'], symptoms: ['突发呼吸困难', '胸痛', '心跳加速', '咳血', '晕厥'], note: '长途飞行后（如AKL↔欧洲）风险增加。Wells评分+D-dimer是NZ常用诊断路径。低分子肝素/直接口服抗凝药治疗。' },
+      { en: 'Sleep Apnea', ipa: '/sliːp ˈæp.ni.ə/', zh: '睡眠呼吸暂停', cat: 'resp', mnemonic: '「睡了啊无呼吸」— 睡着了，突然啊（apnea）无呼吸，吓一跳', ages: ['adult', 'elder'], symptoms: ['打鼾', '夜间呼吸暂停', '晨起头痛', '日间嗜睡', '疲劳'], note: 'NZ约5%成人患中重度OSA。肥胖是最大危险因素。CPAP是标准治疗，NZ PHARMAC可资助设备。' },
 
-const diseases = [
-  // RESPIRATORY
-  {en:'Asthma',ipa:'/ˈæzmə/',zh:'哮喘',cat:'resp',mnemonic:'「爱死马」— 喘不过气，像马在狂奔停不下来',ages:['child','adult'],symptoms:['喘鸣','呼吸困难','胸闷','夜间咳嗽'],note:'NZ患病率全球最高之一（儿童~15%，成人~12.4%）。触发因素：花粉、冷空气、运动、动物皮屑。吸入性皮质激素是一线治疗。'},
-  {en:'COPD',ipa:'/ˌsiː.oʊ.piːˈdiː/',zh:'慢性阻塞性肺病',cat:'resp',mnemonic:'「C-O-P-D，堵住肺」— Choke住，喘不上来，老烟民的代价',ages:['adult','elder'],symptoms:['慢性咳嗽','痰多','进行性呼吸困难','桶状胸'],note:'主因吸烟（85%）。FEV1/FVC<0.7诊断。NZ每年因COPD住院约8,000次。肺康复训练是重要非药物干预。'},
-  {en:'Pneumonia',ipa:'/njuːˈməʊniə/',zh:'肺炎',cat:'resp',mnemonic:'「纽魔你啊」— 细菌魔鬼进肺里，发烧咳嗽你受吧',ages:['child','elder'],symptoms:['发热','咳嗽','胸痛','呼吸急促','痰多'],note:'NZ老年人及毛利/太平洋社区高发。肺炎球菌疫苗65岁以上免费。阿莫西林是社区获得性肺炎一线用药。'},
-  {en:'Bronchiolitis',ipa:'/ˌbrɒŋ.ki.əˈlaɪ.tɪs/',zh:'细支气管炎',cat:'resp',mnemonic:'「搏肉皮他死」— 小宝宝肺里在搏斗，肉（呼气）皮（喘）他死样',ages:['child'],symptoms:['喘鸣','咳嗽','鼻塞流涕','喂养困难','低氧'],note:'RSV是主因，多见<2岁婴儿。NZ冬季高发，是婴儿住院最常见原因之一。主要是支持治疗，补液+吸氧。'},
-  {en:'Pulmonary Embolism',ipa:'/ˈpʌl.mə.nər.i ˈem.bə.lɪ.z(ə)m/',zh:'肺栓塞',cat:'resp',mnemonic:'「破了魔你死」— 血栓堵了肺血管，魔鬼一样突发致命',ages:['adult','elder'],symptoms:['突发呼吸困难','胸痛','心跳加速','咳血','晕厥'],note:'长途飞行后（如AKL↔欧洲）风险增加。Wells评分+D-dimer是NZ常用诊断路径。低分子肝素/直接口服抗凝药治疗。'},
-  {en:'Sleep Apnea',ipa:'/sliːp ˈæp.ni.ə/',zh:'睡眠呼吸暂停',cat:'resp',mnemonic:'「睡了啊无呼吸」— 睡着了，突然啊（apnea）无呼吸，吓一跳',ages:['adult','elder'],symptoms:['打鼾','夜间呼吸暂停','晨起头痛','日间嗜睡','疲劳'],note:'NZ约5%成人患中重度OSA。肥胖是最大危险因素。CPAP是标准治疗，NZ PHARMAC可资助设备。'},
+      // CARDIOVASCULAR
+      { en: 'Hypertension', ipa: '/ˌhaɪ.pəˈten.ʃən/', zh: '高血压', cat: 'cardio', mnemonic: '「海拍腾」— 血压像海浪猛烈拍打血管壁，绷紧了', ages: ['adult', 'elder'], symptoms: ['常无症状', '头痛（重症）', '视物模糊', '鼻出血'], note: 'NZ成人约33%患高血压，知晓率不足60%。目标<130/80mmHg。毛利和太平洋人发病更早更重。' },
+      { en: 'Coronary Artery Disease', ipa: '/ˈkɒr.ə.nər.i ˈɑː.tər.i dɪˈziːz/', zh: '冠状动脉疾病', cat: 'cardio', mnemonic: '「可乐那利」— 喝可乐堵血管，那里（心脏）都不通了', ages: ['adult', 'elder'], symptoms: ['心绞痛', '胸闷压迫感', '左臂放射痛', '劳力后加重', '出汗'], note: 'NZ男性死亡主因。毛利人发病率约欧裔2倍。他汀类+阿司匹林是一线二级预防。' },
+      { en: 'Heart Failure', ipa: '/hɑːt ˈfeɪ.ljər/', zh: '心力衰竭', cat: 'cardio', mnemonic: '「哈踢飞了」— 心脏踢不动血了，水肿气喘飞起来', ages: ['adult', 'elder'], symptoms: ['呼吸困难', '双下肢水肿', '端坐呼吸', '乏力', '夜间阵发性呼吸困难'], note: 'NZ约100,000人患心衰。ACEI/ARB+β受体阻滞剂+SGLT2抑制剂是现代基石治疗。' },
+      { en: 'Atrial Fibrillation', ipa: '/ˈeɪ.tri.əl ˌfɪb.rɪˈleɪ.ʃən/', zh: '心房颤动', cat: 'cardio', mnemonic: '「爱妖飞」— 心脏乱抖像妖精跳舞，飞来飞去节律乱', ages: ['adult', 'elder'], symptoms: ['心悸', '不规则心跳', '疲乏', '头晕', '活动耐力下降'], note: 'NZ约3%成人患AF，是中风的主要危险因素（风险增5倍）。CHA₂DS₂-VASc评分≥2需抗凝治疗。' },
+      { en: 'Stroke', ipa: '/strəʊk/', zh: '中风', cat: 'cardio', mnemonic: '「死裂扣」— 血管死裂了，脑被扣住，一下子不动了', ages: ['adult', 'elder'], symptoms: ['面歪', '单侧手臂无力', '言语不清', '突发剧烈头痛', '视力障碍'], note: 'FAST口诀：脸Face、臂Arm、说Speech、时间Time。NZ每年约9,000人中风。溶栓窗口4.5小时。毛利人平均发病早15年。' },
+      { en: 'Deep Vein Thrombosis', ipa: '/diːp veɪn θrɒmˈbəʊ.sɪs/', zh: '深静脉血栓', cat: 'cardio', mnemonic: '「滴V踢死」— 腿里有个V形血栓在踢你，肿了', ages: ['adult', 'elder'], symptoms: ['小腿肿胀', '压痛', '皮肤发红发热', 'Homan征阳性'], note: 'NZ长途航班后风险高。抗凝（利伐沙班/华法林）是标准治疗。早起活动和弹力袜预防。' },
+      { en: 'Peripheral Arterial Disease', ipa: '/pəˈrɪf.ər.əl ɑːˈtɪər.i.əl dɪˈziːz/', zh: '外周动脉疾病', cat: 'cardio', mnemonic: '「坡了阿踢了」— 腿部血管坡了（堵了），阿（痛啊），走路踢着走', ages: ['elder'], symptoms: ['间歇性跛行', '休息痛', '足部溃疡', '肢端苍白/发凉'], note: 'NZ糖尿病和吸烟人群高发。ABI踝臂指数<0.9诊断。他汀+抗血小板治疗，严重者血运重建。' },
 
-  // CARDIOVASCULAR
-  {en:'Hypertension',ipa:'/ˌhaɪ.pəˈten.ʃən/',zh:'高血压',cat:'cardio',mnemonic:'「海拍腾」— 血压像海浪猛烈拍打血管壁，绷紧了',ages:['adult','elder'],symptoms:['常无症状','头痛（重症）','视物模糊','鼻出血'],note:'NZ成人约33%患高血压，知晓率不足60%。目标<130/80mmHg。毛利和太平洋人发病更早更重。'},
-  {en:'Coronary Artery Disease',ipa:'/ˈkɒr.ə.nər.i ˈɑː.tər.i dɪˈziːz/',zh:'冠状动脉疾病',cat:'cardio',mnemonic:'「可乐那利」— 喝可乐堵血管，那里（心脏）都不通了',ages:['adult','elder'],symptoms:['心绞痛','胸闷压迫感','左臂放射痛','劳力后加重','出汗'],note:'NZ男性死亡主因。毛利人发病率约欧裔2倍。他汀类+阿司匹林是一线二级预防。'},
-  {en:'Heart Failure',ipa:'/hɑːt ˈfeɪ.ljər/',zh:'心力衰竭',cat:'cardio',mnemonic:'「哈踢飞了」— 心脏踢不动血了，水肿气喘飞起来',ages:['adult','elder'],symptoms:['呼吸困难','双下肢水肿','端坐呼吸','乏力','夜间阵发性呼吸困难'],note:'NZ约100,000人患心衰。ACEI/ARB+β受体阻滞剂+SGLT2抑制剂是现代基石治疗。'},
-  {en:'Atrial Fibrillation',ipa:'/ˈeɪ.tri.əl ˌfɪb.rɪˈleɪ.ʃən/',zh:'心房颤动',cat:'cardio',mnemonic:'「爱妖飞」— 心脏乱抖像妖精跳舞，飞来飞去节律乱',ages:['adult','elder'],symptoms:['心悸','不规则心跳','疲乏','头晕','活动耐力下降'],note:'NZ约3%成人患AF，是中风的主要危险因素（风险增5倍）。CHA₂DS₂-VASc评分≥2需抗凝治疗。'},
-  {en:'Stroke',ipa:'/strəʊk/',zh:'中风',cat:'cardio',mnemonic:'「死裂扣」— 血管死裂了，脑被扣住，一下子不动了',ages:['adult','elder'],symptoms:['面歪','单侧手臂无力','言语不清','突发剧烈头痛','视力障碍'],note:'FAST口诀：脸Face、臂Arm、说Speech、时间Time。NZ每年约9,000人中风。溶栓窗口4.5小时。毛利人平均发病早15年。'},
-  {en:'Deep Vein Thrombosis',ipa:'/diːp veɪn θrɒmˈbəʊ.sɪs/',zh:'深静脉血栓',cat:'cardio',mnemonic:'「滴V踢死」— 腿里有个V形血栓在踢你，肿了',ages:['adult','elder'],symptoms:['小腿肿胀','压痛','皮肤发红发热','Homan征阳性'],note:'NZ长途航班后风险高。抗凝（利伐沙班/华法林）是标准治疗。早起活动和弹力袜预防。'},
-  {en:'Peripheral Arterial Disease',ipa:'/pəˈrɪf.ər.əl ɑːˈtɪər.i.əl dɪˈziːz/',zh:'外周动脉疾病',cat:'cardio',mnemonic:'「坡了阿踢了」— 腿部血管坡了（堵了），阿（痛啊），走路踢着走',ages:['elder'],symptoms:['间歇性跛行','休息痛','足部溃疡','肢端苍白/发凉'],note:'NZ糖尿病和吸烟人群高发。ABI踝臂指数<0.9诊断。他汀+抗血小板治疗，严重者血运重建。'},
+      // ENDOCRINE
+      { en: 'Type 2 Diabetes', ipa: '/taɪp tuː ˌdaɪ.əˈbiː.tɪs/', zh: '2型糖尿病', cat: 'endo', mnemonic: '「踹屁死」— 胰岛素"踹"不动糖了，血糖一飙往上死', ages: ['adult', 'elder'], symptoms: ['多饮多尿', '疲劳', '视力模糊', '伤口愈合慢', '手脚麻木'], note: 'NZ约10%成人患2型糖尿病（约50万人）。毛利/太平洋人发病率约欧裔3倍。HbA1c<53mmol/mol为控制目标。' },
+      { en: 'Type 1 Diabetes', ipa: '/taɪp wʌn ˌdaɪ.əˈbiː.tɪs/', zh: '1型糖尿病', cat: 'endo', mnemonic: '「踹屁One」— 免疫系统One-shot踹掉了胰岛β细胞', ages: ['child', 'adult'], symptoms: ['多饮多尿', '体重骤降', '酮症酸中毒', '疲乏', '烦渴'], note: 'NZ约25,000人患1型糖尿病。胰岛素泵和持续血糖监测（CGM）在NZ部分免费资助。' },
+      { en: 'Hypothyroidism', ipa: '/ˌhaɪ.pəʊˈθaɪ.rɔɪ.dɪ.z(ə)m/', zh: '甲状腺功能减退', cat: 'endo', mnemonic: '「海坡了累金」— 甲状腺海拔坡下去，代谢累了金（尽）了', ages: ['adult', 'elder'], symptoms: ['疲劳', '体重增加', '畏寒', '便秘', '皮肤干燥', '声音嘶哑'], note: 'NZ女性高发（约5%成年女性）。TSH升高+T4降低确诊。左甲状腺素（Thyroxine）每日口服是标准治疗。' },
+      { en: 'Hyperthyroidism', ipa: '/ˌhaɪ.pəˈθaɪ.rɔɪ.dɪ.z(ə)m/', zh: '甲状腺功能亢进', cat: 'endo', mnemonic: '「海拍腾亢」— 甲状腺亢奋，心拍加速亢到停不下来', ages: ['adult'], symptoms: ['心悸', '体重下降', '手抖', '怕热多汗', '突眼（Graves）'], note: 'Graves病是最常见原因（约80%）。NZ以甲巯咪唑（Carbimazole）、放射碘或手术为主要治疗方案。' },
+      { en: 'Obesity', ipa: '/əʊˈbiː.sɪ.ti/', zh: '肥胖症', cat: 'endo', mnemonic: '「哦比死提」— Oh，肥胖死死地提着你，动弹不了', ages: ['child', 'adult', 'elder'], symptoms: ['BMI≥30', '活动耐力下降', '关节负担重', '睡眠呼吸暂停', '呼吸困难'], note: 'NZ成人肥胖率约35%，全球前列。Semaglutide（Ozempic/Wegovy）2023年起NZ可处方，需专科转介。' },
+      { en: 'Gout', ipa: '/ɡaʊt/', zh: '痛风', cat: 'endo', mnemonic: '「够痛」— 顾名思义，痛得够你受，夜里突然发作', ages: ['adult', 'elder'], symptoms: ['关节剧烈疼痛', '红肿发热', '夜间突发', '好发大脚趾', '痛风石'], note: 'NZ发病率全球最高（约3.75%）。毛利和太平洋男性高风险。别嘌醇（Allopurinol）是长期预防一线用药。' },
+      { en: 'Metabolic Syndrome', ipa: '/ˌmet.əˈbɒl.ɪk ˈsɪn.drəʊm/', zh: '代谢综合征', cat: 'endo', mnemonic: '「麻踢波利死」— 肚子大、血糖高、血压高，多管齐下麻踢你', ages: ['adult', 'elder'], symptoms: ['腹型肥胖', '高血压', '高血糖', '高甘油三酯', '低HDL'], note: 'NZ约30%成人符合代谢综合征诊断，是心血管病和糖尿病的前驱状态。生活方式干预是核心治疗。' },
 
-  // ENDOCRINE
-  {en:'Type 2 Diabetes',ipa:'/taɪp tuː ˌdaɪ.əˈbiː.tɪs/',zh:'2型糖尿病',cat:'endo',mnemonic:'「踹屁死」— 胰岛素"踹"不动糖了，血糖一飙往上死',ages:['adult','elder'],symptoms:['多饮多尿','疲劳','视力模糊','伤口愈合慢','手脚麻木'],note:'NZ约10%成人患2型糖尿病（约50万人）。毛利/太平洋人发病率约欧裔3倍。HbA1c<53mmol/mol为控制目标。'},
-  {en:'Type 1 Diabetes',ipa:'/taɪp wʌn ˌdaɪ.əˈbiː.tɪs/',zh:'1型糖尿病',cat:'endo',mnemonic:'「踹屁One」— 免疫系统One-shot踹掉了胰岛β细胞',ages:['child','adult'],symptoms:['多饮多尿','体重骤降','酮症酸中毒','疲乏','烦渴'],note:'NZ约25,000人患1型糖尿病。胰岛素泵和持续血糖监测（CGM）在NZ部分免费资助。'},
-  {en:'Hypothyroidism',ipa:'/ˌhaɪ.pəʊˈθaɪ.rɔɪ.dɪ.z(ə)m/',zh:'甲状腺功能减退',cat:'endo',mnemonic:'「海坡了累金」— 甲状腺海拔坡下去，代谢累了金（尽）了',ages:['adult','elder'],symptoms:['疲劳','体重增加','畏寒','便秘','皮肤干燥','声音嘶哑'],note:'NZ女性高发（约5%成年女性）。TSH升高+T4降低确诊。左甲状腺素（Thyroxine）每日口服是标准治疗。'},
-  {en:'Hyperthyroidism',ipa:'/ˌhaɪ.pəˈθaɪ.rɔɪ.dɪ.z(ə)m/',zh:'甲状腺功能亢进',cat:'endo',mnemonic:'「海拍腾亢」— 甲状腺亢奋，心拍加速亢到停不下来',ages:['adult'],symptoms:['心悸','体重下降','手抖','怕热多汗','突眼（Graves）'],note:'Graves病是最常见原因（约80%）。NZ以甲巯咪唑（Carbimazole）、放射碘或手术为主要治疗方案。'},
-  {en:'Obesity',ipa:'/əʊˈbiː.sɪ.ti/',zh:'肥胖症',cat:'endo',mnemonic:'「哦比死提」— Oh，肥胖死死地提着你，动弹不了',ages:['child','adult','elder'],symptoms:['BMI≥30','活动耐力下降','关节负担重','睡眠呼吸暂停','呼吸困难'],note:'NZ成人肥胖率约35%，全球前列。Semaglutide（Ozempic/Wegovy）2023年起NZ可处方，需专科转介。'},
-  {en:'Gout',ipa:'/ɡaʊt/',zh:'痛风',cat:'endo',mnemonic:'「够痛」— 顾名思义，痛得够你受，夜里突然发作',ages:['adult','elder'],symptoms:['关节剧烈疼痛','红肿发热','夜间突发','好发大脚趾','痛风石'],note:'NZ发病率全球最高（约3.75%）。毛利和太平洋男性高风险。别嘌醇（Allopurinol）是长期预防一线用药。'},
-  {en:'Metabolic Syndrome',ipa:'/ˌmet.əˈbɒl.ɪk ˈsɪn.drəʊm/',zh:'代谢综合征',cat:'endo',mnemonic:'「麻踢波利死」— 肚子大、血糖高、血压高，多管齐下麻踢你',ages:['adult','elder'],symptoms:['腹型肥胖','高血压','高血糖','高甘油三酯','低HDL'],note:'NZ约30%成人符合代谢综合征诊断，是心血管病和糖尿病的前驱状态。生活方式干预是核心治疗。'},
+      // NEUROLOGICAL
+      { en: 'Migraine', ipa: '/ˈmiː.ɡreɪn/', zh: '偏头痛', cat: 'neuro', mnemonic: '「迈个瑞恩踢」— 头里面瑞恩在踢，单侧爆炸式头痛', ages: ['adult'], symptoms: ['单侧搏动性头痛', '恶心呕吐', '畏光畏声', '视觉先兆'], note: 'NZ约16%成人患偏头痛，女性是男性3倍。曲坦类（Sumatriptan）急性期；托吡酯/阿米替林预防。' },
+      { en: 'Epilepsy', ipa: '/ˈep.ɪ.lep.si/', zh: '癫痫', cat: 'neuro', mnemonic: '「爱破里西」— 脑子爆了，意识里西（离去），发作没商量', ages: ['child', 'adult', 'elder'], symptoms: ['反复癫痫发作', '意识丧失', '肢体抽搐', '发作后意识模糊', '跌倒受伤'], note: 'NZ约50,000人患癫痫。两次非诱发性发作后诊断。丙戊酸/拉莫三嗪是NZ常用一线药。' },
+      { en: "Parkinson's Disease", ipa: "/ˈpɑː.kɪn.sənz dɪˈziːz/", zh: '帕金森病', cat: 'neuro', mnemonic: '「怕金逊」— 手怕动（抖），金（僵）了，逊色了，记忆衰退', ages: ['elder'], symptoms: ['静止性震颤', '肌强直', '运动迟缓', '姿势不稳', '面具脸'], note: 'NZ约12,000人患帕金森病，65岁以上约1%。左旋多巴（Levodopa/Carbidopa）是最有效药物。' },
+      { en: 'Dementia', ipa: '/dɪˈmen.ʃə/', zh: '痴呆症', cat: 'neuro', mnemonic: '「底门下」— 记忆跌落到门槛之下，怎么找也找不回来', ages: ['elder'], symptoms: ['记忆力下降', '定向障碍', '语言困难', '性格改变', '日常生活能力下降'], note: 'NZ约7万人患痴呆症，Alzheimer病最常见（约60-70%）。多奈哌齐（Donepezil）可延缓认知下降。' },
+      { en: 'Multiple Sclerosis', ipa: '/ˈmʌl.tɪ.pl̩ skləˈrəʊ.sɪs/', zh: '多发性硬化症', cat: 'neuro', mnemonic: '「爸踢跛了死」— 神经被打了，走路跛，多处硬化，视力也死', ages: ['adult'], symptoms: ['肢体无力', '视力障碍（视神经炎）', '感觉异常', '疲劳', '共济失调'], note: 'NZ发病率较高（约100/10万），南岛更高。干扰素β和那他珠单抗是NZ常用疾病修正药物。' },
+      { en: 'Peripheral Neuropathy', ipa: '/pəˈrɪf.ər.əl njʊəˈrɒp.ə.θi/', zh: '周围神经病变', cat: 'neuro', mnemonic: '「坏了飞落踢」— 神经坏了，感觉飞走了，走路踢到东西', ages: ['adult', 'elder'], symptoms: ['手脚麻木/刺痛', '烧灼感', '夜间加重', '步态不稳', '肌无力'], note: '糖尿病是NZ最常见原因。维生素B12缺乏、酒精也是重要病因。加巴喷丁/阿米替林用于神经痛。' },
+      { en: 'Tension Headache', ipa: '/ˈten.ʃən ˈhed.eɪk/', zh: '紧张型头痛', cat: 'neuro', mnemonic: '「腾神头痛」— 压力腾起来，神经紧张，头绑了个箍痛', ages: ['adult'], symptoms: ['双侧头痛', '压迫感（非搏动性）', '轻中度', '不因活动加重'], note: 'NZ最常见头痛类型（约38%成人）。对乙酰氨基酚/布洛芬有效；注意止痛药物过度使用性头痛。' },
 
-  // NEUROLOGICAL
-  {en:'Migraine',ipa:'/ˈmiː.ɡreɪn/',zh:'偏头痛',cat:'neuro',mnemonic:'「迈个瑞恩踢」— 头里面瑞恩在踢，单侧爆炸式头痛',ages:['adult'],symptoms:['单侧搏动性头痛','恶心呕吐','畏光畏声','视觉先兆'],note:'NZ约16%成人患偏头痛，女性是男性3倍。曲坦类（Sumatriptan）急性期；托吡酯/阿米替林预防。'},
-  {en:'Epilepsy',ipa:'/ˈep.ɪ.lep.si/',zh:'癫痫',cat:'neuro',mnemonic:'「爱破里西」— 脑子爆了，意识里西（离去），发作没商量',ages:['child','adult','elder'],symptoms:['反复癫痫发作','意识丧失','肢体抽搐','发作后意识模糊','跌倒受伤'],note:'NZ约50,000人患癫痫。两次非诱发性发作后诊断。丙戊酸/拉莫三嗪是NZ常用一线药。'},
-  {en:"Parkinson's Disease",ipa:"/ˈpɑː.kɪn.sənz dɪˈziːz/",zh:'帕金森病',cat:'neuro',mnemonic:'「怕金逊」— 手怕动（抖），金（僵）了，逊色了，记忆衰退',ages:['elder'],symptoms:['静止性震颤','肌强直','运动迟缓','姿势不稳','面具脸'],note:'NZ约12,000人患帕金森病，65岁以上约1%。左旋多巴（Levodopa/Carbidopa）是最有效药物。'},
-  {en:'Dementia',ipa:'/dɪˈmen.ʃə/',zh:'痴呆症',cat:'neuro',mnemonic:'「底门下」— 记忆跌落到门槛之下，怎么找也找不回来',ages:['elder'],symptoms:['记忆力下降','定向障碍','语言困难','性格改变','日常生活能力下降'],note:'NZ约7万人患痴呆症，Alzheimer病最常见（约60-70%）。多奈哌齐（Donepezil）可延缓认知下降。'},
-  {en:'Multiple Sclerosis',ipa:'/ˈmʌl.tɪ.pl̩ skləˈrəʊ.sɪs/',zh:'多发性硬化症',cat:'neuro',mnemonic:'「爸踢跛了死」— 神经被打了，走路跛，多处硬化，视力也死',ages:['adult'],symptoms:['肢体无力','视力障碍（视神经炎）','感觉异常','疲劳','共济失调'],note:'NZ发病率较高（约100/10万），南岛更高。干扰素β和那他珠单抗是NZ常用疾病修正药物。'},
-  {en:'Peripheral Neuropathy',ipa:'/pəˈrɪf.ər.əl njʊəˈrɒp.ə.θi/',zh:'周围神经病变',cat:'neuro',mnemonic:'「坏了飞落踢」— 神经坏了，感觉飞走了，走路踢到东西',ages:['adult','elder'],symptoms:['手脚麻木/刺痛','烧灼感','夜间加重','步态不稳','肌无力'],note:'糖尿病是NZ最常见原因。维生素B12缺乏、酒精也是重要病因。加巴喷丁/阿米替林用于神经痛。'},
-  {en:'Tension Headache',ipa:'/ˈten.ʃən ˈhed.eɪk/',zh:'紧张型头痛',cat:'neuro',mnemonic:'「腾神头痛」— 压力腾起来，神经紧张，头绑了个箍痛',ages:['adult'],symptoms:['双侧头痛','压迫感（非搏动性）','轻中度','不因活动加重'],note:'NZ最常见头痛类型（约38%成人）。对乙酰氨基酚/布洛芬有效；注意止痛药物过度使用性头痛。'},
+      // MUSCULOSKELETAL
+      { en: 'Osteoarthritis', ipa: '/ˌɒs.ti.əʊ.ɑːˈθraɪ.tɪs/', zh: '骨关节炎', cat: 'msk', mnemonic: '「奥斯特阿瑟踢死」— 骨头像被踢了，越来越僵硬死板', ages: ['elder'], symptoms: ['关节疼痛', '晨僵<30分钟', '关节肿胀', '关节变形', '活动受限'], note: 'NZ65岁以上约50%受影响。膝、髋最常见。对乙酰氨基酚+物理治疗为一线，严重者行关节置换。' },
+      { en: 'Rheumatoid Arthritis', ipa: '/ˈruː.mə.tɔɪd ɑːˈθraɪ.tɪs/', zh: '类风湿关节炎', cat: 'msk', mnemonic: '「鲁马踢阿瑟死」— 免疫系统踢自己的关节，踢到死板变形', ages: ['adult', 'elder'], symptoms: ['对称性关节肿痛', '晨僵>1小时', '关节变形', '疲劳', '类风湿结节'], note: 'NZ约1%成人患RA，女性是男性3倍。早期甲氨蝶呤（Methotrexate）+生物制剂是NZ标准疗法。' },
+      { en: 'Osteoporosis', ipa: '/ˌɒs.ti.əʊ.pəˈrəʊ.sɪs/', zh: '骨质疏松症', cat: 'msk', mnemonic: '「奥斯特坡了肉死」— 骨质坡了（少了），一跌就骨折死', ages: ['elder'], symptoms: ['常无症状', '低能量骨折', '身高变矮', '背痛（压缩骨折）'], note: 'NZ约20%60岁以上女性骨密度低。钙+维生素D+双膦酸盐（阿仑膦酸钠）是标准治疗。DEXA扫描筛查。' },
+      { en: 'Lower Back Pain', ipa: '/ˈləʊ.ər bæk peɪn/', zh: '腰痛', cat: 'msk', mnemonic: '「老背痛」— 老了背就痛，低头干活太久必有报应', ages: ['adult', 'elder'], symptoms: ['腰部疼痛', '活动受限', '放射至腿（坐骨神经痛）', '弯腰加重'], note: 'NZ成人腰痛终身患病率约80%，是最常见GP就诊原因之一。大多数4-6周内自愈，鼓励运动而非卧床。' },
+      { en: 'Rheumatic Fever', ipa: '/ruːˈmæt.ɪk ˈfiː.vər/', zh: '风湿热', cat: 'msk', mnemonic: '「鲁马tic发」— 如魔法热，让心脏和关节全遭殃，发发发', ages: ['child'], symptoms: ['游走性关节炎', '发热', '心脏杂音', '皮下结节', '环形红斑'], note: 'NZ特有高发病率（全球最高之一）。链球菌咽炎未治疗诱发。青霉素长程预防至21岁，毛利/太平洋儿童重点筛查。' },
+      { en: 'Fibromyalgia', ipa: '/ˌfaɪ.brəʊ.maɪˈæl.dʒɪ.ə/', zh: '纤维肌痛综合征', cat: 'msk', mnemonic: '「飞不了my痛」— 全身都痛，飞不了，你（my）的痛说不清楚', ages: ['adult'], symptoms: ['广泛慢性肌肉痛', '疲劳', '睡眠障碍', '认知障碍（脑雾）', '多处压痛点'], note: 'NZ约2%成人患纤维肌痛，女性多见。多学科干预（运动+CBT+药物）为主。阿米替林、普瑞巴林可缓解症状。' },
+      { en: 'Chronic Pain', ipa: '/ˈkrɒn.ɪk peɪn/', zh: '慢性疼痛', cat: 'msk', mnemonic: '「刻棱坡恩」— 痛超过3个月刻进骨子里了，棱角都磨坏了', ages: ['adult', 'elder'], symptoms: ['持续疼痛>3个月', '睡眠障碍', '情绪低落', '活动受限', '止痛药依赖'], note: 'NZ 2024/25健康调查显示27.5%成人有慢性疼痛。多学科疼痛管理（Pain Clinic）是NZ主要资源。' },
+      { en: 'Ankylosing Spondylitis', ipa: '/ˌæŋ.kɪ.ləʊ.zɪŋ ˌspɒn.dɪˈlaɪ.tɪs/', zh: '强直性脊柱炎', cat: 'msk', mnemonic: '「昂扣了脊椎死」— 脊椎骨节被扣死了，弯不了腰，僵直了', ages: ['adult'], symptoms: ['下腰痛（休息后加重）', '晨僵', '骶髂关节痛', '眼葡萄膜炎', '驼背（晚期）'], note: 'NZ约0.5%成人患强直性脊柱炎，男性多见。HLA-B27阳性约90%。TNF抑制剂效果好，在NZ有特殊申请路径。' },
 
-  // MUSCULOSKELETAL
-  {en:'Osteoarthritis',ipa:'/ˌɒs.ti.əʊ.ɑːˈθraɪ.tɪs/',zh:'骨关节炎',cat:'msk',mnemonic:'「奥斯特阿瑟踢死」— 骨头像被踢了，越来越僵硬死板',ages:['elder'],symptoms:['关节疼痛','晨僵<30分钟','关节肿胀','关节变形','活动受限'],note:'NZ65岁以上约50%受影响。膝、髋最常见。对乙酰氨基酚+物理治疗为一线，严重者行关节置换。'},
-  {en:'Rheumatoid Arthritis',ipa:'/ˈruː.mə.tɔɪd ɑːˈθraɪ.tɪs/',zh:'类风湿关节炎',cat:'msk',mnemonic:'「鲁马踢阿瑟死」— 免疫系统踢自己的关节，踢到死板变形',ages:['adult','elder'],symptoms:['对称性关节肿痛','晨僵>1小时','关节变形','疲劳','类风湿结节'],note:'NZ约1%成人患RA，女性是男性3倍。早期甲氨蝶呤（Methotrexate）+生物制剂是NZ标准疗法。'},
-  {en:'Osteoporosis',ipa:'/ˌɒs.ti.əʊ.pəˈrəʊ.sɪs/',zh:'骨质疏松症',cat:'msk',mnemonic:'「奥斯特坡了肉死」— 骨质坡了（少了），一跌就骨折死',ages:['elder'],symptoms:['常无症状','低能量骨折','身高变矮','背痛（压缩骨折）'],note:'NZ约20%60岁以上女性骨密度低。钙+维生素D+双膦酸盐（阿仑膦酸钠）是标准治疗。DEXA扫描筛查。'},
-  {en:'Lower Back Pain',ipa:'/ˈləʊ.ər bæk peɪn/',zh:'腰痛',cat:'msk',mnemonic:'「老背痛」— 老了背就痛，低头干活太久必有报应',ages:['adult','elder'],symptoms:['腰部疼痛','活动受限','放射至腿（坐骨神经痛）','弯腰加重'],note:'NZ成人腰痛终身患病率约80%，是最常见GP就诊原因之一。大多数4-6周内自愈，鼓励运动而非卧床。'},
-  {en:'Rheumatic Fever',ipa:'/ruːˈmæt.ɪk ˈfiː.vər/',zh:'风湿热',cat:'msk',mnemonic:'「鲁马tic发」— 如魔法热，让心脏和关节全遭殃，发发发',ages:['child'],symptoms:['游走性关节炎','发热','心脏杂音','皮下结节','环形红斑'],note:'NZ特有高发病率（全球最高之一）。链球菌咽炎未治疗诱发。青霉素长程预防至21岁，毛利/太平洋儿童重点筛查。'},
-  {en:'Fibromyalgia',ipa:'/ˌfaɪ.brəʊ.maɪˈæl.dʒɪ.ə/',zh:'纤维肌痛综合征',cat:'msk',mnemonic:'「飞不了my痛」— 全身都痛，飞不了，你（my）的痛说不清楚',ages:['adult'],symptoms:['广泛慢性肌肉痛','疲劳','睡眠障碍','认知障碍（脑雾）','多处压痛点'],note:'NZ约2%成人患纤维肌痛，女性多见。多学科干预（运动+CBT+药物）为主。阿米替林、普瑞巴林可缓解症状。'},
-  {en:'Chronic Pain',ipa:'/ˈkrɒn.ɪk peɪn/',zh:'慢性疼痛',cat:'msk',mnemonic:'「刻棱坡恩」— 痛超过3个月刻进骨子里了，棱角都磨坏了',ages:['adult','elder'],symptoms:['持续疼痛>3个月','睡眠障碍','情绪低落','活动受限','止痛药依赖'],note:'NZ 2024/25健康调查显示27.5%成人有慢性疼痛。多学科疼痛管理（Pain Clinic）是NZ主要资源。'},
-  {en:'Ankylosing Spondylitis',ipa:'/ˌæŋ.kɪ.ləʊ.zɪŋ ˌspɒn.dɪˈlaɪ.tɪs/',zh:'强直性脊柱炎',cat:'msk',mnemonic:'「昂扣了脊椎死」— 脊椎骨节被扣死了，弯不了腰，僵直了',ages:['adult'],symptoms:['下腰痛（休息后加重）','晨僵','骶髂关节痛','眼葡萄膜炎','驼背（晚期）'],note:'NZ约0.5%成人患强直性脊柱炎，男性多见。HLA-B27阳性约90%。TNF抑制剂效果好，在NZ有特殊申请路径。'},
+      // GASTROINTESTINAL
+      { en: 'Gastroesophageal Reflux Disease', ipa: '/ˌɡæs.trəʊ.ɪˌsɒf.əˈdʒiː.əl ˈriː.flʌks dɪˈziːz/', zh: '胃食管反流病', cat: 'gi', mnemonic: '「GERD嗝死」— 胃酸返上来一直打嗝，烧死食管', ages: ['adult', 'elder'], symptoms: ['胸骨后烧灼感', '反酸', '吞咽困难', '夜间咳嗽', '慢性咽喉炎'], note: 'NZ约20%成人有GERD症状。质子泵抑制剂（奥美拉唑/兰索拉唑）是最常用处方药之一。减重、抬高床头可辅助。' },
+      { en: 'Irritable Bowel Syndrome', ipa: '/ˈɪr.ɪ.tə.bl̩ ˈbaʊ.əl ˈsɪn.drəʊm/', zh: '肠易激综合征', cat: 'gi', mnemonic: '「I-B-S，肠乱了」— I的肠子B上S了，无缘无故就乱动', ages: ['adult'], symptoms: ['腹痛腹胀', '排便后缓解', '腹泻或便秘交替', '症状反复'], note: 'NZ约17%成人患IBS，女性多于男性。低FODMAP饮食可缓解约75%患者症状。薄荷油胶囊缓解痉挛。' },
+      { en: 'Inflammatory Bowel Disease', ipa: '/ɪnˈflæm.ə.tər.i ˈbaʊ.əl dɪˈziːz/', zh: '炎症性肠病', cat: 'gi', mnemonic: '「爱B滴死」— 肠子爱发炎，一直B（哔）滴不停地痛和拉', ages: ['adult'], symptoms: ['腹痛', '血便', '腹泻', '体重下降', '疲劳'], note: '包括克罗恩病和溃疡性结肠炎。NZ发病率较高（约300/10万）。生物制剂（英夫利西单抗）在NZ有资助。' },
+      { en: 'Celiac Disease', ipa: '/ˈsiː.li.æk dɪˈziːz/', zh: '乳糜泻', cat: 'gi', mnemonic: '「西利亚泻」— 吃了麦子，肠子西里哗啦地泻，营养也没了', ages: ['child', 'adult'], symptoms: ['腹泻腹胀', '体重下降', '疲劳', '贫血', '皮肤疱疹（DH）'], note: '麸质触发小肠自身免疫损伤。唯一治疗：终身无麸质饮食（GFD）。NZ约1%人口患病，漏诊率高。' },
+      { en: 'Diverticular Disease', ipa: '/ˌdaɪ.vəˈtɪk.jʊ.lər dɪˈziːz/', zh: '憩室病', cat: 'gi', mnemonic: '「滴胃踢刻了」— 肠壁上挖了个坑（憩室），踢进去就发炎了', ages: ['elder'], symptoms: ['无症状或左下腹痛', '便秘或腹泻', '发热（憩室炎）', '直肠出血'], note: 'NZ 60岁以上约50%有憩室。高纤维饮食预防。急性憩室炎需抗生素，严重者手术。' },
+      { en: 'Peptic Ulcer Disease', ipa: '/ˈpep.tɪk ˈʌl.sər dɪˈziːz/', zh: '消化性溃疡', cat: 'gi', mnemonic: '「坏了破了洞」— 胃或十二指肠壁坏了破了洞，痛起来要命', ages: ['adult', 'elder'], symptoms: ['上腹痛（餐前/夜间）', '反酸', '恶心', '黑便（出血）', '饥饿痛'], note: 'H. pylori感染和NSAIDs是NZ主要病因。三联疗法根除H. pylori后溃疡愈合率>90%。' },
+      { en: 'Gallstones', ipa: '/ˈɡɔːl.stəʊnz/', zh: '胆结石', cat: 'gi', mnemonic: '「感了石」— 胆里感染结了石，餐后剧烈胆绞痛', ages: ['adult', 'elder'], symptoms: ['右上腹绞痛', '餐后加重', '恶心呕吐', '发热（胆囊炎）', '黄疸（胆管结石）'], note: 'NZ约10%成人有胆结石，女性和肥胖人群高发。腹腔镜胆囊切除是标准治疗。' },
+      { en: 'Non-Alcoholic Fatty Liver Disease', ipa: '/nɒn ˌæl.kəˈhɒl.ɪk ˈfæt.i ˈlɪv.ər dɪˈziːz/', zh: '非酒精性脂肪肝', cat: 'gi', mnemonic: '「脂肝不喝酒」— 不喝酒也能脂肪肝，肚子太大了', ages: ['adult', 'elder'], symptoms: ['常无症状', '右上腹不适', '疲劳', '肝大', '黄疸（严重时）'], note: 'NZ约25%成人患NAFLD，与肥胖/糖尿病密切相关。NZ自2024年起认可Resmetirom（Rezdiffra）治疗NASH。' },
 
-  // GASTROINTESTINAL
-  {en:'Gastroesophageal Reflux Disease',ipa:'/ˌɡæs.trəʊ.ɪˌsɒf.əˈdʒiː.əl ˈriː.flʌks dɪˈziːz/',zh:'胃食管反流病',cat:'gi',mnemonic:'「GERD嗝死」— 胃酸返上来一直打嗝，烧死食管',ages:['adult','elder'],symptoms:['胸骨后烧灼感','反酸','吞咽困难','夜间咳嗽','慢性咽喉炎'],note:'NZ约20%成人有GERD症状。质子泵抑制剂（奥美拉唑/兰索拉唑）是最常用处方药之一。减重、抬高床头可辅助。'},
-  {en:'Irritable Bowel Syndrome',ipa:'/ˈɪr.ɪ.tə.bl̩ ˈbaʊ.əl ˈsɪn.drəʊm/',zh:'肠易激综合征',cat:'gi',mnemonic:'「I-B-S，肠乱了」— I的肠子B上S了，无缘无故就乱动',ages:['adult'],symptoms:['腹痛腹胀','排便后缓解','腹泻或便秘交替','症状反复'],note:'NZ约17%成人患IBS，女性多于男性。低FODMAP饮食可缓解约75%患者症状。薄荷油胶囊缓解痉挛。'},
-  {en:'Inflammatory Bowel Disease',ipa:'/ɪnˈflæm.ə.tər.i ˈbaʊ.əl dɪˈziːz/',zh:'炎症性肠病',cat:'gi',mnemonic:'「爱B滴死」— 肠子爱发炎，一直B（哔）滴不停地痛和拉',ages:['adult'],symptoms:['腹痛','血便','腹泻','体重下降','疲劳'],note:'包括克罗恩病和溃疡性结肠炎。NZ发病率较高（约300/10万）。生物制剂（英夫利西单抗）在NZ有资助。'},
-  {en:'Celiac Disease',ipa:'/ˈsiː.li.æk dɪˈziːz/',zh:'乳糜泻',cat:'gi',mnemonic:'「西利亚泻」— 吃了麦子，肠子西里哗啦地泻，营养也没了',ages:['child','adult'],symptoms:['腹泻腹胀','体重下降','疲劳','贫血','皮肤疱疹（DH）'],note:'麸质触发小肠自身免疫损伤。唯一治疗：终身无麸质饮食（GFD）。NZ约1%人口患病，漏诊率高。'},
-  {en:'Diverticular Disease',ipa:'/ˌdaɪ.vəˈtɪk.jʊ.lər dɪˈziːz/',zh:'憩室病',cat:'gi',mnemonic:'「滴胃踢刻了」— 肠壁上挖了个坑（憩室），踢进去就发炎了',ages:['elder'],symptoms:['无症状或左下腹痛','便秘或腹泻','发热（憩室炎）','直肠出血'],note:'NZ 60岁以上约50%有憩室。高纤维饮食预防。急性憩室炎需抗生素，严重者手术。'},
-  {en:'Peptic Ulcer Disease',ipa:'/ˈpep.tɪk ˈʌl.sər dɪˈziːz/',zh:'消化性溃疡',cat:'gi',mnemonic:'「坏了破了洞」— 胃或十二指肠壁坏了破了洞，痛起来要命',ages:['adult','elder'],symptoms:['上腹痛（餐前/夜间）','反酸','恶心','黑便（出血）','饥饿痛'],note:'H. pylori感染和NSAIDs是NZ主要病因。三联疗法根除H. pylori后溃疡愈合率>90%。'},
-  {en:'Gallstones',ipa:'/ˈɡɔːl.stəʊnz/',zh:'胆结石',cat:'gi',mnemonic:'「感了石」— 胆里感染结了石，餐后剧烈胆绞痛',ages:['adult','elder'],symptoms:['右上腹绞痛','餐后加重','恶心呕吐','发热（胆囊炎）','黄疸（胆管结石）'],note:'NZ约10%成人有胆结石，女性和肥胖人群高发。腹腔镜胆囊切除是标准治疗。'},
-  {en:'Non-Alcoholic Fatty Liver Disease',ipa:'/nɒn ˌæl.kəˈhɒl.ɪk ˈfæt.i ˈlɪv.ər dɪˈziːz/',zh:'非酒精性脂肪肝',cat:'gi',mnemonic:'「脂肝不喝酒」— 不喝酒也能脂肪肝，肚子太大了',ages:['adult','elder'],symptoms:['常无症状','右上腹不适','疲劳','肝大','黄疸（严重时）'],note:'NZ约25%成人患NAFLD，与肥胖/糖尿病密切相关。NZ自2024年起认可Resmetirom（Rezdiffra）治疗NASH。'},
+      // SKIN
+      { en: 'Eczema (Atopic Dermatitis)', ipa: '/ˈek.sɪ.mə (eɪˌtɒp.ɪk ˌdɜː.məˈtaɪ.tɪs)/', zh: '湿疹/特应性皮炎', cat: 'skin', mnemonic: '「爱克泽马」— 皮肤爱出水，摸了就发马（狂痒）', ages: ['child', 'adult'], symptoms: ['皮肤瘙痒', '红疹', '皮肤干燥', '渗液结痂', '皮肤增厚'], note: 'NZ儿童约30%受影响，全球最高之一。常与哮喘、过敏性鼻炎并发（特应性三联征）。保湿+外用激素是基础治疗。' },
+      { en: 'Psoriasis', ipa: '/səˈraɪ.ə.sɪs/', zh: '银屑病', cat: 'skin', mnemonic: '「搔瑞死是」— 皮肤搔不尽，银屑扑簌簌落下来，是（确实）难受', ages: ['adult', 'elder'], symptoms: ['银白色鳞屑', '红色斑块', '瘙痒', '指甲受累（点状凹陷）'], note: 'NZ约3%成人患银屑病。约30%合并银屑病关节炎。生物制剂（司库奇尤单抗）可获ACC资助。' },
+      { en: 'Melanoma', ipa: '/ˌmel.əˈnəʊ.mə/', zh: '黑色素瘤', cat: 'skin', mnemonic: '「没了那么」— 皮肤没了那么一块黑痣，要当心了', ages: ['adult', 'elder'], symptoms: ['痣变大变色', '边缘不规则', '颜色不均匀', '出血/溃疡', '新痣突然出现'], note: 'NZ发病率全球第二高。ABCDE法则：不对称Asymmetry、边界Border、颜色Color、直径Diameter、演变Evolution。' },
+      { en: 'Tinea (Ringworm/Athlete\'s Foot)', ipa: '/ˈtɪn.i.ə/', zh: '癣（足癣/体癣）', cat: 'skin', mnemonic: '「体你啊真菌」— 真菌贴体（你啊），环形红圈爬上来', ages: ['child', 'adult'], symptoms: ['环形红斑', '瘙痒', '脱皮', '足趾间浸渍（足癣）', '脱发（头癣）'], note: 'NZ学校儿童头癣（Tinea capitis）高发，尤见毛利/太平洋社区。克霉唑外用或特比萘芬口服。' },
+      { en: 'Acne Vulgaris', ipa: '/ˈæk.ni vʌlˈɡeər.ɪs/', zh: '寻常型痤疮', cat: 'skin', mnemonic: '「爱可你来」— 青春期爱可（找）你，可恼地长满脸', ages: ['child', 'adult'], symptoms: ['粉刺', '丘疹脓疱', '结节囊肿', '面部/背部/胸部', '色素沉着'], note: 'NZ青少年约85%有不同程度痤疮。外用维A酸+苯过氧化苯甲酰是一线。重症用口服异维A酸（Roaccutane）。' },
+      { en: 'Rosacea', ipa: '/rəʊˈzeɪ.ʃə/', zh: '玫瑰痤疮', cat: 'skin', mnemonic: '「肉扎下」— 脸上肉被玫瑰扎了，红红肿肿，扎下去就不消', ages: ['adult', 'elder'], symptoms: ['面部持续潮红', '丘疹脓疱', '毛细血管扩张', '鼻赘（鼻瘤）', '眼部症状'], note: 'NZ浅肤色人群高发，中年女性多见。甲硝唑外用+强力霉素口服是NZ常用方案，避免触发因素。' },
+      { en: 'Cellulitis', ipa: '/ˌsel.jʊˈlaɪ.tɪs/', zh: '蜂窝织炎', cat: 'skin', mnemonic: '「赛路踢死」— 皮肤细胞路上被细菌踢，红肿热痛', ages: ['adult', 'elder'], symptoms: ['皮肤红肿热痛', '边界不清', '发热', '淋巴管炎', '水疱'], note: '金黄色葡萄球菌和链球菌是主因。下肢最常见。轻度用口服头孢氨苄；重度需静脉抗生素。' },
 
-  // SKIN
-  {en:'Eczema (Atopic Dermatitis)',ipa:'/ˈek.sɪ.mə (eɪˌtɒp.ɪk ˌdɜː.məˈtaɪ.tɪs)/',zh:'湿疹/特应性皮炎',cat:'skin',mnemonic:'「爱克泽马」— 皮肤爱出水，摸了就发马（狂痒）',ages:['child','adult'],symptoms:['皮肤瘙痒','红疹','皮肤干燥','渗液结痂','皮肤增厚'],note:'NZ儿童约30%受影响，全球最高之一。常与哮喘、过敏性鼻炎并发（特应性三联征）。保湿+外用激素是基础治疗。'},
-  {en:'Psoriasis',ipa:'/səˈraɪ.ə.sɪs/',zh:'银屑病',cat:'skin',mnemonic:'「搔瑞死是」— 皮肤搔不尽，银屑扑簌簌落下来，是（确实）难受',ages:['adult','elder'],symptoms:['银白色鳞屑','红色斑块','瘙痒','指甲受累（点状凹陷）'],note:'NZ约3%成人患银屑病。约30%合并银屑病关节炎。生物制剂（司库奇尤单抗）可获ACC资助。'},
-  {en:'Melanoma',ipa:'/ˌmel.əˈnəʊ.mə/',zh:'黑色素瘤',cat:'skin',mnemonic:'「没了那么」— 皮肤没了那么一块黑痣，要当心了',ages:['adult','elder'],symptoms:['痣变大变色','边缘不规则','颜色不均匀','出血/溃疡','新痣突然出现'],note:'NZ发病率全球第二高。ABCDE法则：不对称Asymmetry、边界Border、颜色Color、直径Diameter、演变Evolution。'},
-  {en:'Tinea (Ringworm/Athlete\'s Foot)',ipa:'/ˈtɪn.i.ə/',zh:'癣（足癣/体癣）',cat:'skin',mnemonic:'「体你啊真菌」— 真菌贴体（你啊），环形红圈爬上来',ages:['child','adult'],symptoms:['环形红斑','瘙痒','脱皮','足趾间浸渍（足癣）','脱发（头癣）'],note:'NZ学校儿童头癣（Tinea capitis）高发，尤见毛利/太平洋社区。克霉唑外用或特比萘芬口服。'},
-  {en:'Acne Vulgaris',ipa:'/ˈæk.ni vʌlˈɡeər.ɪs/',zh:'寻常型痤疮',cat:'skin',mnemonic:'「爱可你来」— 青春期爱可（找）你，可恼地长满脸',ages:['child','adult'],symptoms:['粉刺','丘疹脓疱','结节囊肿','面部/背部/胸部','色素沉着'],note:'NZ青少年约85%有不同程度痤疮。外用维A酸+苯过氧化苯甲酰是一线。重症用口服异维A酸（Roaccutane）。'},
-  {en:'Rosacea',ipa:'/rəʊˈzeɪ.ʃə/',zh:'玫瑰痤疮',cat:'skin',mnemonic:'「肉扎下」— 脸上肉被玫瑰扎了，红红肿肿，扎下去就不消',ages:['adult','elder'],symptoms:['面部持续潮红','丘疹脓疱','毛细血管扩张','鼻赘（鼻瘤）','眼部症状'],note:'NZ浅肤色人群高发，中年女性多见。甲硝唑外用+强力霉素口服是NZ常用方案，避免触发因素。'},
-  {en:'Cellulitis',ipa:'/ˌsel.jʊˈlaɪ.tɪs/',zh:'蜂窝织炎',cat:'skin',mnemonic:'「赛路踢死」— 皮肤细胞路上被细菌踢，红肿热痛',ages:['adult','elder'],symptoms:['皮肤红肿热痛','边界不清','发热','淋巴管炎','水疱'],note:'金黄色葡萄球菌和链球菌是主因。下肢最常见。轻度用口服头孢氨苄；重度需静脉抗生素。'},
+      // MENTAL HEALTH
+      { en: 'Depression', ipa: '/dɪˈpreʃ.ən/', zh: '抑郁症', cat: 'mental', mnemonic: '「滴扑瑞神」— 情绪像水滴，扑通落下，神气没了，提不起来', ages: ['adult', 'elder'], symptoms: ['持续情绪低落', '失去兴趣', '睡眠障碍', '注意力下降', '自杀意念'], note: 'NZ终身患病率约16%，青少年和毛利人群发生率更高。SSRI（西酞普兰/舍曲林）是一线药物+CBT心理治疗。' },
+      { en: 'Anxiety Disorders', ipa: '/æŋˈzaɪ.ə.ti dɪsˈɔː.dəz/', zh: '焦虑症', cat: 'mental', mnemonic: '「爱卧泽踢」— 焦虑让你卧床，泽（汗）流，心跳踢得飞快', ages: ['child', 'adult', 'elder'], symptoms: ['过度担忧', '心悸', '肌肉紧张', '回避行为', '惊恐发作'], note: 'NZ最常见精神健康问题（约30%终身患病率）。CBT认知行为治疗+SSRI是首选方案。网上Free&Me等项目在NZ推广。' },
+      { en: 'Bipolar Disorder', ipa: '/baɪˈpəʊ.lər dɪsˈɔː.də/', zh: '双相情感障碍', cat: 'mental', mnemonic: '「拜坡了高低」— 情绪忽高山忽低谷，两个极坡来回走', ages: ['adult'], symptoms: ['躁狂期（情绪高涨/冲动/减少睡眠）', '抑郁期', '思维混乱', '冲动行为'], note: 'NZ约1.5%成人患双相障碍。锂盐是NZ一线情绪稳定剂，需定期监测血药浓度（0.6-0.8mmol/L）。' },
+      { en: 'Schizophrenia', ipa: '/ˌskɪt.səˈfriː.ni.ə/', zh: '精神分裂症', cat: 'mental', mnemonic: '「死快飞你啊」— 精神分裂，现实与幻觉飞来飞去分不清楚', ages: ['adult'], symptoms: ['幻觉（听幻觉为主）', '妄想', '思维混乱', '阴性症状（情感淡漠）'], note: 'NZ约1%成人患精神分裂症。早期干预项目（如EASE）在NZ推广。氯氮平/利培酮是主要治疗药物。' },
+      { en: 'Post-Traumatic Stress Disorder', ipa: '/pəʊst trɔːˈmæt.ɪk stres dɪsˈɔː.də/', zh: '创伤后应激障碍', cat: 'mental', mnemonic: '「P-T-S-D，痛太深了」— 痛太深留下伤，记忆闪回停不了', ages: ['adult'], symptoms: ['闪回', '噩梦', '回避', '过度警觉', '情感麻木'], note: 'NZ约8%成人有PTSD，基督城地震和COVID后发生率上升。EMDR（眼动脱敏）和创伤聚焦CBT是NZ一线心理治疗。' },
+      { en: 'ADHD', ipa: '/ˌeɪ.diː.eɪtʃˈdiː/', zh: '注意力缺陷多动障碍', cat: 'mental', mnemonic: '「爱滴滴嗨滴」— 注意力滴来滴去，嗨到停不下来，没完没了', ages: ['child', 'adult'], symptoms: ['注意力不集中', '多动冲动', '学业/工作受影响', '情绪调节困难'], note: 'NZ儿童约5%，成人约2.5%患ADHD。哌甲酯（Ritalin）和阿托莫西汀在NZ有资助处方，需精神科/发育儿科医生处方。' },
+      { en: 'Eating Disorders', ipa: '/ˈiː.tɪŋ dɪsˈɔː.dəz/', zh: '进食障碍', cat: 'mental', mnemonic: '「爱吃死了但不吃」— 明明很想吃，但身体上了锁，吃了就死（催吐）', ages: ['child', 'adult'], symptoms: ['体重极低（AN）', '反复暴食/清除（BN）', '对食物/体重的执念', '月经停止'], note: 'NZ青少年女性高发。神经性厌食症（AN）死亡率是精神疾病中最高。需多学科团队（营养+心理+医学）治疗。' },
 
-  // MENTAL HEALTH
-  {en:'Depression',ipa:'/dɪˈpreʃ.ən/',zh:'抑郁症',cat:'mental',mnemonic:'「滴扑瑞神」— 情绪像水滴，扑通落下，神气没了，提不起来',ages:['adult','elder'],symptoms:['持续情绪低落','失去兴趣','睡眠障碍','注意力下降','自杀意念'],note:'NZ终身患病率约16%，青少年和毛利人群发生率更高。SSRI（西酞普兰/舍曲林）是一线药物+CBT心理治疗。'},
-  {en:'Anxiety Disorders',ipa:'/æŋˈzaɪ.ə.ti dɪsˈɔː.dəz/',zh:'焦虑症',cat:'mental',mnemonic:'「爱卧泽踢」— 焦虑让你卧床，泽（汗）流，心跳踢得飞快',ages:['child','adult','elder'],symptoms:['过度担忧','心悸','肌肉紧张','回避行为','惊恐发作'],note:'NZ最常见精神健康问题（约30%终身患病率）。CBT认知行为治疗+SSRI是首选方案。网上Free&Me等项目在NZ推广。'},
-  {en:'Bipolar Disorder',ipa:'/baɪˈpəʊ.lər dɪsˈɔː.də/',zh:'双相情感障碍',cat:'mental',mnemonic:'「拜坡了高低」— 情绪忽高山忽低谷，两个极坡来回走',ages:['adult'],symptoms:['躁狂期（情绪高涨/冲动/减少睡眠）','抑郁期','思维混乱','冲动行为'],note:'NZ约1.5%成人患双相障碍。锂盐是NZ一线情绪稳定剂，需定期监测血药浓度（0.6-0.8mmol/L）。'},
-  {en:'Schizophrenia',ipa:'/ˌskɪt.səˈfriː.ni.ə/',zh:'精神分裂症',cat:'mental',mnemonic:'「死快飞你啊」— 精神分裂，现实与幻觉飞来飞去分不清楚',ages:['adult'],symptoms:['幻觉（听幻觉为主）','妄想','思维混乱','阴性症状（情感淡漠）'],note:'NZ约1%成人患精神分裂症。早期干预项目（如EASE）在NZ推广。氯氮平/利培酮是主要治疗药物。'},
-  {en:'Post-Traumatic Stress Disorder',ipa:'/pəʊst trɔːˈmæt.ɪk stres dɪsˈɔː.də/',zh:'创伤后应激障碍',cat:'mental',mnemonic:'「P-T-S-D，痛太深了」— 痛太深留下伤，记忆闪回停不了',ages:['adult'],symptoms:['闪回','噩梦','回避','过度警觉','情感麻木'],note:'NZ约8%成人有PTSD，基督城地震和COVID后发生率上升。EMDR（眼动脱敏）和创伤聚焦CBT是NZ一线心理治疗。'},
-  {en:'ADHD',ipa:'/ˌeɪ.diː.eɪtʃˈdiː/',zh:'注意力缺陷多动障碍',cat:'mental',mnemonic:'「爱滴滴嗨滴」— 注意力滴来滴去，嗨到停不下来，没完没了',ages:['child','adult'],symptoms:['注意力不集中','多动冲动','学业/工作受影响','情绪调节困难'],note:'NZ儿童约5%，成人约2.5%患ADHD。哌甲酯（Ritalin）和阿托莫西汀在NZ有资助处方，需精神科/发育儿科医生处方。'},
-  {en:'Eating Disorders',ipa:'/ˈiː.tɪŋ dɪsˈɔː.dəz/',zh:'进食障碍',cat:'mental',mnemonic:'「爱吃死了但不吃」— 明明很想吃，但身体上了锁，吃了就死（催吐）',ages:['child','adult'],symptoms:['体重极低（AN）','反复暴食/清除（BN）','对食物/体重的执念','月经停止'],note:'NZ青少年女性高发。神经性厌食症（AN）死亡率是精神疾病中最高。需多学科团队（营养+心理+医学）治疗。'},
+      // INFECTIOUS DISEASES
+      { en: 'Influenza', ipa: '/ˌɪn.fluˈen.zə/', zh: '流感', cat: 'infect', mnemonic: '「英服楞扎」— 流感一来，浑身发楞，扎了你一身不舒服，服了吧', ages: ['child', 'adult', 'elder'], symptoms: ['高热（突发）', '全身肌肉酸痛', '头痛', '干咳', '疲劳'], note: 'NZ每年约3,000人因流感死亡。65岁以上和孕妇免费接种。奥司他韦（Tamiflu）48小时内用药有效。' },
+      { en: 'COVID-19', ipa: '/ˌkəʊ.vɪd naɪnˈtiːn/', zh: '新冠病毒感染', cat: 'infect', mnemonic: '「扣V滴9」— 新冠扣住你，V形还没来，9次变种', ages: ['child', 'adult', 'elder'], symptoms: ['发热咳嗽', '失去嗅味觉', '疲劳', '呼吸困难', '长新冠'], note: 'NZ经历多轮Omicron浪潮。Paxlovid（奈玛特韦）高风险人群可获政府资助。第五剂加强针65+可免费接种。' },
+      { en: 'Urinary Tract Infection', ipa: '/ˈjʊər.ɪ.nər.i trækt ɪnˈfek.ʃən/', zh: '尿路感染', cat: 'infect', mnemonic: '「U-T-I，尿痛」— Urine里踢（T）了痒（I），尿尿刺痛', ages: ['child', 'adult', 'elder'], symptoms: ['尿频尿急', '排尿烧灼感', '尿液浑浊', '下腹痛', '发热（肾盂肾炎）'], note: 'NZ女性最常见感染（终身患病率>50%）。大肠杆菌是主因。呋喃妥因/甲氧苄啶是NZ一线抗生素。' },
+      { en: 'Meningococcal Disease', ipa: '/məˌnɪŋ.ɡəʊˈkɒk.əl dɪˈziːz/', zh: '脑膜炎球菌病', cat: 'infect', mnemonic: '「没你够寇」— 没有疫苗就够你受，细菌来寇击大脑', ages: ['child'], symptoms: ['高热', '剧烈头痛', '颈项强直', '皮肤出血点（不褪色）', '畏光'], note: 'NZ儿童免费接种MenB和MenACWY疫苗。出现不褪色皮疹立即急诊。青霉素G静脉是治疗金标准。' },
+      { en: 'Gastroenteritis', ipa: '/ˌɡæs.trəʊˌen.təˈraɪ.tɪs/', zh: '肠胃炎', cat: 'infect', mnemonic: '「感死他了」— 病毒感染肠胃，死命吐泻，他终于好了', ages: ['child', 'adult'], symptoms: ['呕吐', '腹泻', '腹痛', '发热', '脱水'], note: '诺如病毒是NZ最常见原因。以补液为主，抗生素通常不需要。儿童轮状病毒疫苗NZ免费接种。' },
+      { en: 'Glandular Fever', ipa: '/ˈɡlæn.djʊ.lər ˈfiː.və/', zh: '腺热（单核细胞增多症）', cat: 'infect', mnemonic: '「感了发发」— 淋巴腺感染，发发热，发发累，青少年易发', ages: ['child', 'adult'], symptoms: ['极度疲劳', '发热', '咽喉痛', '淋巴结肿大', '脾大'], note: 'EB病毒感染，青少年和大学生高发（「接吻病」）。禁止剧烈运动防脾破裂，恢复需数周至数月。' },
+      { en: 'Skin and Soft Tissue Infections', ipa: '/skɪn ænd sɒft ˈtɪʃ.uː ɪnˈfek.ʃənz/', zh: '皮肤软组织感染', cat: 'infect', mnemonic: '「皮软组织感」— 皮肤软了被细菌感，又红又热又肿痛', ages: ['child', 'adult', 'elder'], symptoms: ['皮肤红肿热痛', '脓疱/脓肿', '发热', '蜂窝织炎'], note: '金黄色葡萄球菌（含MRSA）是NZ儿童皮肤感染常见原因，尤见太平洋社区。头孢氨苄口服为一线。' },
+      { en: 'Streptococcal Throat Infection', ipa: '/ˌstrep.təˈkɒk.əl θrəʊt ɪnˈfek.ʃən/', zh: '链球菌咽喉炎', cat: 'infect', mnemonic: '「A链球踢死你」— A组链球菌踢你的咽喉，不治会踢到心脏', ages: ['child'], symptoms: ['咽喉剧痛', '发热', '扁桃体脓苔', '颈部淋巴结肿大', '无咳嗽'], note: 'NZ必须重视：未治疗可发展为风湿热，导致永久性心脏损害。青霉素V/阿莫西林10天疗程。' },
 
-  // INFECTIOUS DISEASES
-  {en:'Influenza',ipa:'/ˌɪn.fluˈen.zə/',zh:'流感',cat:'infect',mnemonic:'「英服楞扎」— 流感一来，浑身发楞，扎了你一身不舒服，服了吧',ages:['child','adult','elder'],symptoms:['高热（突发）','全身肌肉酸痛','头痛','干咳','疲劳'],note:'NZ每年约3,000人因流感死亡。65岁以上和孕妇免费接种。奥司他韦（Tamiflu）48小时内用药有效。'},
-  {en:'COVID-19',ipa:'/ˌkəʊ.vɪd naɪnˈtiːn/',zh:'新冠病毒感染',cat:'infect',mnemonic:'「扣V滴9」— 新冠扣住你，V形还没来，9次变种',ages:['child','adult','elder'],symptoms:['发热咳嗽','失去嗅味觉','疲劳','呼吸困难','长新冠'],note:'NZ经历多轮Omicron浪潮。Paxlovid（奈玛特韦）高风险人群可获政府资助。第五剂加强针65+可免费接种。'},
-  {en:'Urinary Tract Infection',ipa:'/ˈjʊər.ɪ.nər.i trækt ɪnˈfek.ʃən/',zh:'尿路感染',cat:'infect',mnemonic:'「U-T-I，尿痛」— Urine里踢（T）了痒（I），尿尿刺痛',ages:['child','adult','elder'],symptoms:['尿频尿急','排尿烧灼感','尿液浑浊','下腹痛','发热（肾盂肾炎）'],note:'NZ女性最常见感染（终身患病率>50%）。大肠杆菌是主因。呋喃妥因/甲氧苄啶是NZ一线抗生素。'},
-  {en:'Meningococcal Disease',ipa:'/məˌnɪŋ.ɡəʊˈkɒk.əl dɪˈziːz/',zh:'脑膜炎球菌病',cat:'infect',mnemonic:'「没你够寇」— 没有疫苗就够你受，细菌来寇击大脑',ages:['child'],symptoms:['高热','剧烈头痛','颈项强直','皮肤出血点（不褪色）','畏光'],note:'NZ儿童免费接种MenB和MenACWY疫苗。出现不褪色皮疹立即急诊。青霉素G静脉是治疗金标准。'},
-  {en:'Gastroenteritis',ipa:'/ˌɡæs.trəʊˌen.təˈraɪ.tɪs/',zh:'肠胃炎',cat:'infect',mnemonic:'「感死他了」— 病毒感染肠胃，死命吐泻，他终于好了',ages:['child','adult'],symptoms:['呕吐','腹泻','腹痛','发热','脱水'],note:'诺如病毒是NZ最常见原因。以补液为主，抗生素通常不需要。儿童轮状病毒疫苗NZ免费接种。'},
-  {en:'Glandular Fever',ipa:'/ˈɡlæn.djʊ.lər ˈfiː.və/',zh:'腺热（单核细胞增多症）',cat:'infect',mnemonic:'「感了发发」— 淋巴腺感染，发发热，发发累，青少年易发',ages:['child','adult'],symptoms:['极度疲劳','发热','咽喉痛','淋巴结肿大','脾大'],note:'EB病毒感染，青少年和大学生高发（「接吻病」）。禁止剧烈运动防脾破裂，恢复需数周至数月。'},
-  {en:'Skin and Soft Tissue Infections',ipa:'/skɪn ænd sɒft ˈtɪʃ.uː ɪnˈfek.ʃənz/',zh:'皮肤软组织感染',cat:'infect',mnemonic:'「皮软组织感」— 皮肤软了被细菌感，又红又热又肿痛',ages:['child','adult','elder'],symptoms:['皮肤红肿热痛','脓疱/脓肿','发热','蜂窝织炎'],note:'金黄色葡萄球菌（含MRSA）是NZ儿童皮肤感染常见原因，尤见太平洋社区。头孢氨苄口服为一线。'},
-  {en:'Streptococcal Throat Infection',ipa:'/ˌstrep.təˈkɒk.əl θrəʊt ɪnˈfek.ʃən/',zh:'链球菌咽喉炎',cat:'infect',mnemonic:'「A链球踢死你」— A组链球菌踢你的咽喉，不治会踢到心脏',ages:['child'],symptoms:['咽喉剧痛','发热','扁桃体脓苔','颈部淋巴结肿大','无咳嗽'],note:'NZ必须重视：未治疗可发展为风湿热，导致永久性心脏损害。青霉素V/阿莫西林10天疗程。'},
+      // CANCER
+      { en: 'Colorectal Cancer', ipa: '/ˌkɒl.əˈrek.təl ˈkæn.sər/', zh: '结直肠癌', cat: 'cancer', mnemonic: '「可乐狂了死」— 肠子里症状狂了（异常），不查就死', ages: ['adult', 'elder'], symptoms: ['大便习惯改变', '血便', '腹痛', '体重下降', '贫血'], note: 'NZ发病率全球前列。50-74岁双年免费粪便隐血筛查（bowelscreen.co.nz）。家族史者提前至45岁筛查。' },
+      { en: 'Lung Cancer', ipa: '/lʌŋ ˈkæn.sər/', zh: '肺癌', cat: 'cancer', mnemonic: '「朗刚死」— 肺（lung）里刚发现就太晚了，预后差（差死）', ages: ['adult', 'elder'], symptoms: ['持续咳嗽', '咳血', '胸痛', '声音嘶哑', '体重下降'], note: 'NZ癌症死亡率第一位。85%与吸烟相关。2023年起NZ对高风险人群推出低剂量CT肺癌筛查项目。' },
+      { en: 'Breast Cancer', ipa: '/brest ˈkæn.sər/', zh: '乳腺癌', cat: 'cancer', mnemonic: '「breast坎」— 乳房遇到的那道坎，早查早过关', ages: ['adult', 'elder'], symptoms: ['乳房肿块', '皮肤凹陷/橘皮样', '乳头溢液', '腋窝淋巴结肿大'], note: 'NZ女性最常见癌症。45-69岁两年一次免费钼靶筛查（BreastScreen Aotearoa）。BRCA1/2基因检测可获资助。' },
+      { en: 'Prostate Cancer', ipa: '/ˈprɒs.teɪt ˈkæn.sər/', zh: '前列腺癌', cat: 'cancer', mnemonic: '「前列保state」— 前列腺是男人的国度（state），要好好守护', ages: ['elder'], symptoms: ['排尿困难', '尿频夜尿多', '血尿', '骨痛（转移后）'], note: 'NZ男性最常见癌症。50岁以上建议与GP讨论PSA筛查利弊。毛利和波利尼西亚男性死亡率更高。达芬奇手术在NZ部分公立医院开展。' },
+      { en: 'Cervical Cancer', ipa: '/ˈsɜː.vɪ.kəl ˈkæn.sər/', zh: '宫颈癌', cat: 'cancer', mnemonic: '「伤维刻死」— 子宫颈被HPV伤了，刻下病变，不查就死', ages: ['adult'], symptoms: ['常无症状（早期）', '不规则阴道出血', '接触性出血', '阴道异常分泌物'], note: 'HPV是主因。NZ 9-26岁免费接种HPV疫苗（Gardasil 9）。25-69岁每5年免费宫颈筛查（HPV基因检测）。' },
+      { en: 'Skin Cancer (Non-Melanoma)', ipa: '/skɪn ˈkæn.sər (nɒn ˌmel.əˈnəʊ.mə)/', zh: '非黑色素瘤皮肤癌', cat: 'cancer', mnemonic: '「皮肤癌不动声色」— 基底细胞/鳞癌，慢慢长，不痛不痒，发现了才知道', ages: ['adult', 'elder'], symptoms: ['皮肤珍珠样结节（基底细胞）', '角化红斑（鳞癌）', '溃疡不愈', '边缘卷曲'], note: 'NZ发病率极高（强紫外线）。基底细胞癌最常见（约80%）。手术切除治愈率高，防晒是最重要预防。' },
 
-  // CANCER
-  {en:'Colorectal Cancer',ipa:'/ˌkɒl.əˈrek.təl ˈkæn.sər/',zh:'结直肠癌',cat:'cancer',mnemonic:'「可乐狂了死」— 肠子里症状狂了（异常），不查就死',ages:['adult','elder'],symptoms:['大便习惯改变','血便','腹痛','体重下降','贫血'],note:'NZ发病率全球前列。50-74岁双年免费粪便隐血筛查（bowelscreen.co.nz）。家族史者提前至45岁筛查。'},
-  {en:'Lung Cancer',ipa:'/lʌŋ ˈkæn.sər/',zh:'肺癌',cat:'cancer',mnemonic:'「朗刚死」— 肺（lung）里刚发现就太晚了，预后差（差死）',ages:['adult','elder'],symptoms:['持续咳嗽','咳血','胸痛','声音嘶哑','体重下降'],note:'NZ癌症死亡率第一位。85%与吸烟相关。2023年起NZ对高风险人群推出低剂量CT肺癌筛查项目。'},
-  {en:'Breast Cancer',ipa:'/brest ˈkæn.sər/',zh:'乳腺癌',cat:'cancer',mnemonic:'「breast坎」— 乳房遇到的那道坎，早查早过关',ages:['adult','elder'],symptoms:['乳房肿块','皮肤凹陷/橘皮样','乳头溢液','腋窝淋巴结肿大'],note:'NZ女性最常见癌症。45-69岁两年一次免费钼靶筛查（BreastScreen Aotearoa）。BRCA1/2基因检测可获资助。'},
-  {en:'Prostate Cancer',ipa:'/ˈprɒs.teɪt ˈkæn.sər/',zh:'前列腺癌',cat:'cancer',mnemonic:'「前列保state」— 前列腺是男人的国度（state），要好好守护',ages:['elder'],symptoms:['排尿困难','尿频夜尿多','血尿','骨痛（转移后）'],note:'NZ男性最常见癌症。50岁以上建议与GP讨论PSA筛查利弊。毛利和波利尼西亚男性死亡率更高。达芬奇手术在NZ部分公立医院开展。'},
-  {en:'Cervical Cancer',ipa:'/ˈsɜː.vɪ.kəl ˈkæn.sər/',zh:'宫颈癌',cat:'cancer',mnemonic:'「伤维刻死」— 子宫颈被HPV伤了，刻下病变，不查就死',ages:['adult'],symptoms:['常无症状（早期）','不规则阴道出血','接触性出血','阴道异常分泌物'],note:'HPV是主因。NZ 9-26岁免费接种HPV疫苗（Gardasil 9）。25-69岁每5年免费宫颈筛查（HPV基因检测）。'},
-  {en:'Skin Cancer (Non-Melanoma)',ipa:'/skɪn ˈkæn.sər (nɒn ˌmel.əˈnəʊ.mə)/',zh:'非黑色素瘤皮肤癌',cat:'cancer',mnemonic:'「皮肤癌不动声色」— 基底细胞/鳞癌，慢慢长，不痛不痒，发现了才知道',ages:['adult','elder'],symptoms:['皮肤珍珠样结节（基底细胞）','角化红斑（鳞癌）','溃疡不愈','边缘卷曲'],note:'NZ发病率极高（强紫外线）。基底细胞癌最常见（约80%）。手术切除治愈率高，防晒是最重要预防。'},
+      // REPRODUCTIVE/URINARY
+      { en: 'Endometriosis', ipa: '/ˌen.dəʊˌmiː.triˈəʊ.sɪs/', zh: '子宫内膜异位症', cat: 'repro', mnemonic: '「恩滴米踢里哦死」— 子宫内膜跑错地方了，每月踢你痛死', ages: ['adult'], symptoms: ['痛经（剧烈）', '性交痛', '不孕', '慢性盆腔痛', '排便痛'], note: 'NZ约120,000女性患子宫内膜异位症，平均确诊延迟约7年。腹腔镜是诊断金标准，激素治疗或手术。' },
+      { en: 'Polycystic Ovary Syndrome', ipa: '/ˌpɒl.iˈsɪs.tɪk ˈəʊ.vər.i ˈsɪn.drəʊm/', zh: '多囊卵巢综合征', cat: 'repro', mnemonic: '「坡死里哦死」— 卵巢里多个囊，月经坡了（乱了）、肥了、多毛了', ages: ['adult'], symptoms: ['月经不规则/闭经', '多毛', '痤疮', '肥胖', '不孕'], note: 'NZ约12%育龄女性患PCOS，是最常见的内分泌紊乱。二甲双胍+生活方式干预是NZ一线治疗。' },
+      { en: 'Benign Prostatic Hyperplasia', ipa: '/bɪˈnaɪn prɒˈstæt.ɪk ˌhaɪ.pəˈpleɪ.zi.ə/', zh: '前列腺增生', cat: 'repro', mnemonic: '「笨坡是大了」— 前列腺笨笨地（良性地）大了，尿道被堵了', ages: ['elder'], symptoms: ['尿频夜尿多', '尿流细弱', '排尿费力', '尿不尽感'], note: 'NZ70岁以上男性约70%患BPH。α受体阻滞剂（他莫苏洛辛）是一线药物；严重者手术（TURP）。' },
 
-  // REPRODUCTIVE/URINARY
-  {en:'Endometriosis',ipa:'/ˌen.dəʊˌmiː.triˈəʊ.sɪs/',zh:'子宫内膜异位症',cat:'repro',mnemonic:'「恩滴米踢里哦死」— 子宫内膜跑错地方了，每月踢你痛死',ages:['adult'],symptoms:['痛经（剧烈）','性交痛','不孕','慢性盆腔痛','排便痛'],note:'NZ约120,000女性患子宫内膜异位症，平均确诊延迟约7年。腹腔镜是诊断金标准，激素治疗或手术。'},
-  {en:'Polycystic Ovary Syndrome',ipa:'/ˌpɒl.iˈsɪs.tɪk ˈəʊ.vər.i ˈsɪn.drəʊm/',zh:'多囊卵巢综合征',cat:'repro',mnemonic:'「坡死里哦死」— 卵巢里多个囊，月经坡了（乱了）、肥了、多毛了',ages:['adult'],symptoms:['月经不规则/闭经','多毛','痤疮','肥胖','不孕'],note:'NZ约12%育龄女性患PCOS，是最常见的内分泌紊乱。二甲双胍+生活方式干预是NZ一线治疗。'},
-  {en:'Benign Prostatic Hyperplasia',ipa:'/bɪˈnaɪn prɒˈstæt.ɪk ˌhaɪ.pəˈpleɪ.zi.ə/',zh:'前列腺增生',cat:'repro',mnemonic:'「笨坡是大了」— 前列腺笨笨地（良性地）大了，尿道被堵了',ages:['elder'],symptoms:['尿频夜尿多','尿流细弱','排尿费力','尿不尽感'],note:'NZ70岁以上男性约70%患BPH。α受体阻滞剂（他莫苏洛辛）是一线药物；严重者手术（TURP）。'},
+      // EYE
+      { en: 'Glaucoma', ipa: '/ɡlɔːˈkəʊ.mə/', zh: '青光眼', cat: 'eye', mnemonic: '「感了扣模」— 眼压高感了，扣住视神经，视野慢慢模了', ages: ['elder'], symptoms: ['常无症状（开角型）', '视野缩小', '眼压升高', '闭角型：头痛眼红眼痛'], note: 'NZ65岁以上约4%患青光眼。早期诊断可防致盲。噻吗洛尔眼药水是一线，失败者手术（小梁切除）。' },
+      { en: 'Age-Related Macular Degeneration', ipa: '/eɪdʒ rɪˈleɪ.tɪd ˈmæk.jʊ.lər dɪˌdʒen.əˈreɪ.ʃən/', zh: '老年性黄斑变性', cat: 'eye', mnemonic: '「爱了麻刻踢了」— 眼睛老了，黄斑（麻）被踢了，中心视力没了', ages: ['elder'], symptoms: ['中心视力模糊', '直线弯曲（变形视）', '色觉减退', '中心盲点'], note: 'NZ致盲第一原因。湿性AMD用抗VEGF注射（贝伐珠单抗/雷珠单抗），PHARMAC资助。Amsler方格表自测。' },
+      { en: 'Diabetic Retinopathy', ipa: '/ˌdaɪ.əˈbet.ɪk ˌret.ɪˈnɒp.ə.θi/', zh: '糖尿病视网膜病变', cat: 'eye', mnemonic: '「糖踹了眼底」— 血糖踹了眼底血管，慢慢变瞎了', ages: ['adult', 'elder'], symptoms: ['早期无症状', '视力模糊', '飞蚊症', '视野缺损'], note: 'NZ糖尿病患者每年需眼底检查（免费）。激光治疗和抗VEGF注射可防止病情进展，控糖是根本。' },
 
-  // EYE
-  {en:'Glaucoma',ipa:'/ɡlɔːˈkəʊ.mə/',zh:'青光眼',cat:'eye',mnemonic:'「感了扣模」— 眼压高感了，扣住视神经，视野慢慢模了',ages:['elder'],symptoms:['常无症状（开角型）','视野缩小','眼压升高','闭角型：头痛眼红眼痛'],note:'NZ65岁以上约4%患青光眼。早期诊断可防致盲。噻吗洛尔眼药水是一线，失败者手术（小梁切除）。'},
-  {en:'Age-Related Macular Degeneration',ipa:'/eɪdʒ rɪˈleɪ.tɪd ˈmæk.jʊ.lər dɪˌdʒen.əˈreɪ.ʃən/',zh:'老年性黄斑变性',cat:'eye',mnemonic:'「爱了麻刻踢了」— 眼睛老了，黄斑（麻）被踢了，中心视力没了',ages:['elder'],symptoms:['中心视力模糊','直线弯曲（变形视）','色觉减退','中心盲点'],note:'NZ致盲第一原因。湿性AMD用抗VEGF注射（贝伐珠单抗/雷珠单抗），PHARMAC资助。Amsler方格表自测。'},
-  {en:'Diabetic Retinopathy',ipa:'/ˌdaɪ.əˈbet.ɪk ˌret.ɪˈnɒp.ə.θi/',zh:'糖尿病视网膜病变',cat:'eye',mnemonic:'「糖踹了眼底」— 血糖踹了眼底血管，慢慢变瞎了',ages:['adult','elder'],symptoms:['早期无症状','视力模糊','飞蚊症','视野缺损'],note:'NZ糖尿病患者每年需眼底检查（免费）。激光治疗和抗VEGF注射可防止病情进展，控糖是根本。'},
+      // ENT
+      { en: 'Otitis Media', ipa: '/əʊˈtaɪ.tɪs ˈmiː.di.ə/', zh: '中耳炎', cat: 'ent', mnemonic: '「哦踢死媒体」— 耳朵被踢到，发炎了，媒（霉）透了', ages: ['child'], symptoms: ['耳痛', '听力下降', '发热', '小儿哭闹拉耳朵', '耳道流脓'], note: '毛利和太平洋儿童高发，反复感染可致慢性听力损失。置管（grommets）是NZ常见手术，有公费资助。' },
+      { en: 'Allergic Rhinitis', ipa: '/əˈlɜː.dʒɪk raɪˈnaɪ.tɪs/', zh: '过敏性鼻炎', cat: 'ent', mnemonic: '「爱了个瑞那死」— 爱过敏，鼻子瑞那（流不停），真是死难受', ages: ['child', 'adult'], symptoms: ['喷嚏', '流涕', '鼻塞', '眼鼻痒', '季节性（花粉）'], note: 'NZ约15%成人患过敏性鼻炎，春夏高发（牧草花粉）。鼻用皮质激素（氟替卡松）是最有效一线治疗。' },
+      { en: 'Tonsillitis', ipa: '/ˌtɒn.sɪˈlaɪ.tɪs/', zh: '扁桃体炎', cat: 'ent', mnemonic: '「讨那赛了踢死」— 扁桃体被细菌赛满脓，踢死你一样吞咽', ages: ['child'], symptoms: ['咽喉痛', '吞咽困难', '发热', '扁桃体红肿化脓'], note: 'A组链球菌是主要细菌病因。青霉素/阿莫西林治疗。反复发作（年>7次）考虑扁桃体切除（公费）。' },
+      { en: 'Hearing Loss', ipa: '/ˈhɪər.ɪŋ lɒs/', zh: '听力损失', cat: 'ent', mnemonic: '「听力累了」— 耳朵累了，听了这么多年，损失了', ages: ['elder'], symptoms: ['听力下降', '耳鸣', '交流困难', '频繁要求重复'], note: 'NZ65岁以上约1/3有中度以上听力损失。助听器在NZ公费资助（WINZ支持）。定期纯音测听筛查。' },
 
-  // ENT
-  {en:'Otitis Media',ipa:'/əʊˈtaɪ.tɪs ˈmiː.di.ə/',zh:'中耳炎',cat:'ent',mnemonic:'「哦踢死媒体」— 耳朵被踢到，发炎了，媒（霉）透了',ages:['child'],symptoms:['耳痛','听力下降','发热','小儿哭闹拉耳朵','耳道流脓'],note:'毛利和太平洋儿童高发，反复感染可致慢性听力损失。置管（grommets）是NZ常见手术，有公费资助。'},
-  {en:'Allergic Rhinitis',ipa:'/əˈlɜː.dʒɪk raɪˈnaɪ.tɪs/',zh:'过敏性鼻炎',cat:'ent',mnemonic:'「爱了个瑞那死」— 爱过敏，鼻子瑞那（流不停），真是死难受',ages:['child','adult'],symptoms:['喷嚏','流涕','鼻塞','眼鼻痒','季节性（花粉）'],note:'NZ约15%成人患过敏性鼻炎，春夏高发（牧草花粉）。鼻用皮质激素（氟替卡松）是最有效一线治疗。'},
-  {en:'Tonsillitis',ipa:'/ˌtɒn.sɪˈlaɪ.tɪs/',zh:'扁桃体炎',cat:'ent',mnemonic:'「讨那赛了踢死」— 扁桃体被细菌赛满脓，踢死你一样吞咽',ages:['child'],symptoms:['咽喉痛','吞咽困难','发热','扁桃体红肿化脓'],note:'A组链球菌是主要细菌病因。青霉素/阿莫西林治疗。反复发作（年>7次）考虑扁桃体切除（公费）。'},
-  {en:'Hearing Loss',ipa:'/ˈhɪər.ɪŋ lɒs/',zh:'听力损失',cat:'ent',mnemonic:'「听力累了」— 耳朵累了，听了这么多年，损失了',ages:['elder'],symptoms:['听力下降','耳鸣','交流困难','频繁要求重复'],note:'NZ65岁以上约1/3有中度以上听力损失。助听器在NZ公费资助（WINZ支持）。定期纯音测听筛查。'},
+      // RENAL
+      { en: 'Chronic Kidney Disease', ipa: '/ˈkrɒn.ɪk ˈkɪd.ni dɪˈziːz/', zh: '慢性肾病', cat: 'renal', mnemonic: '「刻棱坡了死」— 肾功能刻印着坡下去，进入透析死地', ages: ['adult', 'elder'], symptoms: ['早期无症状', '水肿', '疲劳', '贫血', '高血压', '尿量减少'], note: 'NZ约10%成人eGFR<60（CKD 3期以上）。糖尿病和高血压是主因。SGLT2抑制剂可延缓进展。' },
+      { en: 'Kidney Stones', ipa: '/ˈkɪd.ni stəʊnz/', zh: '肾结石', cat: 'renal', mnemonic: '「肾里有石」— 肾里有颗石头，走起来肾绞痛，痛不欲生', ages: ['adult'], symptoms: ['腰腹部剧烈绞痛', '血尿', '恶心呕吐', '尿频', '排尿不适'], note: 'NZ约10%成人一生中至少一次肾结石。草酸钙结石最常见（约75%）。大量饮水预防，体外冲击波碎石治疗。' },
 
-  // RENAL
-  {en:'Chronic Kidney Disease',ipa:'/ˈkrɒn.ɪk ˈkɪd.ni dɪˈziːz/',zh:'慢性肾病',cat:'renal',mnemonic:'「刻棱坡了死」— 肾功能刻印着坡下去，进入透析死地',ages:['adult','elder'],symptoms:['早期无症状','水肿','疲劳','贫血','高血压','尿量减少'],note:'NZ约10%成人eGFR<60（CKD 3期以上）。糖尿病和高血压是主因。SGLT2抑制剂可延缓进展。'},
-  {en:'Kidney Stones',ipa:'/ˈkɪd.ni stəʊnz/',zh:'肾结石',cat:'renal',mnemonic:'「肾里有石」— 肾里有颗石头，走起来肾绞痛，痛不欲生',ages:['adult'],symptoms:['腰腹部剧烈绞痛','血尿','恶心呕吐','尿频','排尿不适'],note:'NZ约10%成人一生中至少一次肾结石。草酸钙结石最常见（约75%）。大量饮水预防，体外冲击波碎石治疗。'},
+      // BLOOD
+      { en: 'Iron Deficiency Anaemia', ipa: '/ˈaɪ.ən dɪˈfɪʃ.ən.si əˈniː.mi.ə/', zh: '缺铁性贫血', cat: 'blood', mnemonic: '「爱了啊你弱」— 铁不够（爱了），血色素低了，啊你弱了', ages: ['child', 'adult'], symptoms: ['疲劳', '苍白', '气促', '头晕', '心跳加速', '异食癖'], note: 'NZ最常见贫血类型，孕妇、婴幼儿和素食者高风险。口服硫酸亚铁是一线治疗；严重者静脉铁剂。' },
+      { en: 'Vitamin B12 Deficiency', ipa: '/ˈvaɪ.tə.mɪn biː twelv dɪˈfɪʃ.ən.si/', zh: '维生素B12缺乏', cat: 'blood', mnemonic: '「B12不补哭」— 纯素食不补B12，神经血液一起哭', ages: ['adult', 'elder'], symptoms: ['疲劳', '大细胞性贫血', '手脚麻木', '记忆力减退', '口腔溃疡'], note: 'NZ纯素食者、老年人（胃酸减少）和二甲双胍使用者高风险。肌注或口服高剂量B12补充治疗。' },
+      { en: 'Venous Thromboembolism', ipa: '/ˈviː.nəs ˌθrɒm.bəʊˈem.bə.lɪ.z(ə)m/', zh: '静脉血栓栓塞症', cat: 'blood', mnemonic: '「V踢E死」— 静脉（V）里血栓踢（T）E（你），堵到肺就死', ages: ['adult', 'elder'], symptoms: ['下肢肿胀疼痛（DVT）', '胸痛呼吸困难（PE）', '心跳加速'], note: 'NZ每年约6,000例VTE。手术后、卧床、妊娠、肥胖是高危因素。利伐沙班/阿哌沙班是NZ一线口服抗凝药。' },
+    ];
 
-  // BLOOD
-  {en:'Iron Deficiency Anaemia',ipa:'/ˈaɪ.ən dɪˈfɪʃ.ən.si əˈniː.mi.ə/',zh:'缺铁性贫血',cat:'blood',mnemonic:'「爱了啊你弱」— 铁不够（爱了），血色素低了，啊你弱了',ages:['child','adult'],symptoms:['疲劳','苍白','气促','头晕','心跳加速','异食癖'],note:'NZ最常见贫血类型，孕妇、婴幼儿和素食者高风险。口服硫酸亚铁是一线治疗；严重者静脉铁剂。'},
-  {en:'Vitamin B12 Deficiency',ipa:'/ˈvaɪ.tə.mɪn biː twelv dɪˈfɪʃ.ən.si/',zh:'维生素B12缺乏',cat:'blood',mnemonic:'「B12不补哭」— 纯素食不补B12，神经血液一起哭',ages:['adult','elder'],symptoms:['疲劳','大细胞性贫血','手脚麻木','记忆力减退','口腔溃疡'],note:'NZ纯素食者、老年人（胃酸减少）和二甲双胍使用者高风险。肌注或口服高剂量B12补充治疗。'},
-  {en:'Venous Thromboembolism',ipa:'/ˈviː.nəs ˌθrɒm.bəʊˈem.bə.lɪ.z(ə)m/',zh:'静脉血栓栓塞症',cat:'blood',mnemonic:'「V踢E死」— 静脉（V）里血栓踢（T）E（你），堵到肺就死',ages:['adult','elder'],symptoms:['下肢肿胀疼痛（DVT）','胸痛呼吸困难（PE）','心跳加速'],note:'NZ每年约6,000例VTE。手术后、卧床、妊娠、肥胖是高危因素。利伐沙班/阿哌沙班是NZ一线口服抗凝药。'},
-];
+    // Build category buttons
+    const catSet = [...new Set(diseases.map(d => d.cat))];
+    const catFiltersEl = document.getElementById('catFilters');
+    catSet.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'pill cat-pill';
+      btn.dataset.cat = cat;
+      btn.textContent = CATEGORIES[cat]?.label || cat;
+      catFiltersEl.appendChild(btn);
+    });
 
-// Build category buttons
-const catSet = [...new Set(diseases.map(d => d.cat))];
-const catFiltersEl = document.getElementById('catFilters');
-catSet.forEach(cat => {
-  const btn = document.createElement('button');
-  btn.className = 'pill cat-pill';
-  btn.dataset.cat = cat;
-  btn.textContent = CATEGORIES[cat]?.label || cat;
-  catFiltersEl.appendChild(btn);
-});
+    document.getElementById('totalBadge').textContent = `共 ${diseases.length} 种疾病`;
 
-document.getElementById('totalBadge').textContent = `共 ${diseases.length} 种疾病`;
+    let currentAge = 'all', currentCat = 'all', searchTerm = '';
 
-let currentAge = 'all', currentCat = 'all', searchTerm = '';
-
-function renderCards() {
-  const grid = document.getElementById('grid');
-  let filtered = diseases.filter(d => {
-    const matchAge = currentAge === 'all' || d.ages.includes(currentAge);
-    const matchCat = currentCat === 'all' || d.cat === currentCat;
-    const q = searchTerm.toLowerCase();
-    const matchSearch = !q || d.en.toLowerCase().includes(q) || d.zh.includes(searchTerm) || d.mnemonic.includes(searchTerm);
-    return matchAge && matchCat && matchSearch;
-  });
-  document.getElementById('stats').textContent = `显示 ${filtered.length} / ${diseases.length}`;
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty"><h3>暂无结果</h3><p>换个关键词或筛选条件试试</p></div>`;
-    return;
-  }
-  grid.innerHTML = filtered.map((d, i) => {
-    const cat = CATEGORIES[d.cat] || {};
-    const ageTags = d.ages.map(a => {
-      const labels = {child:'儿童', adult:'成人', elder:'老年'};
-      return `<span class="age-tag tag-${a}">${labels[a]}</span>`;
-    }).join('');
-    const symptoms = d.symptoms.map(s => `<span class="symptom-chip">${s}</span>`).join('');
-    return `
+    function renderCards() {
+      const grid = document.getElementById('grid');
+      let filtered = diseases.filter(d => {
+        const matchAge = currentAge === 'all' || d.ages.includes(currentAge);
+        const matchCat = currentCat === 'all' || d.cat === currentCat;
+        const q = searchTerm.toLowerCase();
+        const matchSearch = !q || d.en.toLowerCase().includes(q) || d.zh.includes(searchTerm) || d.mnemonic.includes(searchTerm);
+        return matchAge && matchCat && matchSearch;
+      });
+      document.getElementById('stats').textContent = `显示 ${filtered.length} / ${diseases.length}`;
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="empty"><h3>暂无结果</h3><p>换个关键词或筛选条件试试</p></div>`;
+        return;
+      }
+      grid.innerHTML = filtered.map((d, i) => {
+        const cat = CATEGORIES[d.cat] || {};
+        const ageTags = d.ages.map(a => {
+          const labels = { child: '儿童', adult: '成人', elder: '老年' };
+          return `<span class="age-tag tag-${a}">${labels[a]}</span>`;
+        }).join('');
+        const symptoms = d.symptoms.map(s => `<span class="symptom-chip">${s}</span>`).join('');
+        return `
     <div class="card ${d.cat}" onclick="this.classList.toggle('flipped')">
       <div class="card-front">
-        <span class="cat-tag cat-${d.cat}">${cat.label||d.cat}</span>
+        <span class="cat-tag cat-${d.cat}">${cat.label || d.cat}</span>
         <div class="card-en">${d.en}</div>
         ${d.ipa ? `<div class="card-ipa">${d.ipa}</div>` : ''}
         <div class="card-zh">${d.zh}</div>
@@ -348,6 +771,7 @@ function renderCards() {
       </div>
       <div class="card-back">
         <div class="back-header"><span class="back-en">${d.en}</span><span class="back-zh">${d.zh}</span></div>
+        ${d.ipa ? `<div class="card-ipa" style="margin-bottom:10px">${d.ipa}</div>` : ''}
         <div class="detail-label">主要症状</div>
         <div class="symptom-list">${symptoms}</div>
         <div class="detail-label">NZ 临床备注</div>
@@ -356,33 +780,34 @@ function renderCards() {
         <div class="flip-hint">← 点击返回</div>
       </div>
     </div>`;
-  }).join('');
-}
+      }).join('');
+    }
 
-document.querySelectorAll('[data-age]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentAge = btn.dataset.age;
+    document.querySelectorAll('[data-age]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-age]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentAge = btn.dataset.age;
+        renderCards();
+      });
+    });
+
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+      document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active', 'cat-active'));
+      btn.classList.add(btn.dataset.cat === 'all' ? 'active' : 'cat-active');
+      currentCat = btn.dataset.cat;
+      renderCards();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', e => {
+      searchTerm = e.target.value;
+      renderCards();
+    });
+
     renderCards();
-  });
-});
-
-document.addEventListener('click', e => {
-  const btn = e.target.closest('[data-cat]');
-  if (!btn) return;
-  document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active','cat-active'));
-  btn.classList.add(btn.dataset.cat === 'all' ? 'active' : 'cat-active');
-  currentCat = btn.dataset.cat;
-  renderCards();
-});
-
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchTerm = e.target.value;
-  renderCards();
-});
-
-renderCards();
-</script>
+  </script>
 </body>
+
 </html>
